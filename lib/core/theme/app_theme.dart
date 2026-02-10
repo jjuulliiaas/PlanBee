@@ -84,7 +84,7 @@ class AppTheme {
       // Big headers
       headlineLarge: style(size: 30, weight: FontWeight.w600, color: _primaryText),     // task title
       headlineMedium: style(size: 24, weight: FontWeight.w600, color: _primaryText),    // optional screen title
-      headlineSmall: style(size: 20, weight: FontWeight.w600, color: _primaryText),     // screen/section title
+      headlineSmall: style(size: 20, weight: FontWeight.w600,),     // screen/section title
 
       // Body text
       bodyLarge: style(size: 16, weight: FontWeight.w500,),   // categories titles
