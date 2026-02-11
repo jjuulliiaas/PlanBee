@@ -15,8 +15,12 @@ class CreateEditScreen extends StatelessWidget {
         title: const Text('New Task'),
         titleTextStyle: textScheme.headlineSmall,
       ),
-      body: const HomeBody(),
-      bottomNavigationBar: const CustomBottomBar(currentIndex: 1,),
+        body: Stack(
+            children: [
+              const HomeBody(),
+              const CustomBottomBar(currentIndex: 1)
+            ]
+        )
     );
   }
 }

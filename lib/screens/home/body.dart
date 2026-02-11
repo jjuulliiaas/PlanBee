@@ -8,7 +8,13 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: AppPadding.screen(context),
-        child: const Text('placeholder'),
+        child: Container(
+          width: 40,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.red
+          ),
+        ),
     );
   }
 }

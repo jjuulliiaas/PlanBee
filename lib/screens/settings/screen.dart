@@ -15,8 +15,12 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Settings'),
         titleTextStyle: textScheme.headlineSmall,
       ),
-      body: const HomeBody(),
-      bottomNavigationBar: const CustomBottomBar(currentIndex: 3,),
+        body: Stack(
+            children: [
+              const HomeBody(),
+              const CustomBottomBar(currentIndex: 3)
+            ]
+        )
     );
   }
 }

@@ -15,8 +15,12 @@ class StatisticsScreen extends StatelessWidget {
         title: const Text('Statistics'),
         titleTextStyle: textScheme.headlineSmall,
       ),
-      body: const HomeBody(),
-      bottomNavigationBar: const CustomBottomBar(currentIndex: 2,),
+        body: Stack(
+            children: [
+              const HomeBody(),
+              const CustomBottomBar(currentIndex: 2)
+            ]
+        )
     );
   }
 }

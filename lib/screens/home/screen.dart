@@ -16,8 +16,12 @@ class HomeScreen extends StatelessWidget {
         title: const Text('PlanBee'),
         titleTextStyle: textScheme.headlineSmall?.copyWith(color: colorScheme.outline),
         ),
-      body: const HomeBody(),
-      bottomNavigationBar: const CustomBottomBar(currentIndex: 0,),
+      body: Stack(
+        children: [
+          const HomeBody(),
+          const CustomBottomBar(currentIndex: 0)
+        ]
+      )
     );
   }
 }
