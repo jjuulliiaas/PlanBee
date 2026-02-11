@@ -29,9 +29,9 @@ class AppTheme {
 
   // Sizes and forms
 
-  static double get _radiusSmall => 10.0.r;
-  static double get _radiusMedium => 12.0.r;
-  static double get _radiusLarge => 16.0.r;
+  static double get radiusSmall => 10.0.r;
+  static double get radiusMedium => 12.0.r;
+  static double get radiusLarge => 16.0.r;
 
   /// Color Scheme
 
@@ -61,7 +61,7 @@ class AppTheme {
   );
 
   static TextTheme _textTheme(ColorScheme colorScheme) {
-    const String fontName = 'Manrope';
+    // const String fontName = 'Manrope';
 
     TextStyle style({
       required double size,
@@ -135,7 +135,7 @@ class AppTheme {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radiusLarge),
+          borderRadius: BorderRadius.circular(radiusLarge),
         ),
       ),
 
@@ -146,7 +146,7 @@ class AppTheme {
           elevation: 0,
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(_radiusMedium),
+            borderRadius: BorderRadius.circular(radiusMedium),
           ),
           textStyle: textTheme.bodyMedium,
         ),
@@ -158,15 +158,15 @@ class AppTheme {
         contentPadding: const EdgeInsets.all(16),
         hintStyle: TextStyle(color: _hintDisabled),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radiusMedium),
+          borderRadius: BorderRadius.circular(radiusMedium),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radiusMedium),
+          borderRadius: BorderRadius.circular(radiusMedium),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(_radiusMedium),
+          borderRadius: BorderRadius.circular(radiusMedium),
           borderSide: BorderSide(color: _accent, width: 1.5),
         ),
       ),
@@ -194,7 +194,7 @@ class AppTheme {
         checkmarkColor: _accent,
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radiusSmall),
+          borderRadius: BorderRadius.circular(radiusSmall),
         ),
         side: WidgetStateBorderSide.resolveWith((states) {
           if(states.contains(WidgetState.selected)) return BorderSide.none;
@@ -219,7 +219,7 @@ class AppTheme {
         foregroundColor: _white,
         elevation: 1,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radiusLarge),
+          borderRadius: BorderRadius.circular(radiusLarge),
         ),
       ),
 
@@ -229,7 +229,7 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-              top: Radius.circular(_radiusLarge)
+              top: Radius.circular(radiusLarge)
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/theme/app_theme.dart';
-import 'package:planbee/screens/home/screen.dart';
+import 'package:planbee/routes.dart';
 
 void main() {
   runApp(const PlanBee());
@@ -22,7 +22,8 @@ class PlanBee extends StatelessWidget {
           theme: AppTheme.lightTheme,
           themeMode: ThemeMode.light,
           debugShowCheckedModeBanner: false,
-          home: const HomeScreen(),
+          onGenerateRoute: AppRoutes.generateRoute,
+          initialRoute: AppRoutes.home,
         );
       },
     );
