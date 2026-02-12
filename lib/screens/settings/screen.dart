@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
       ),
         body: Stack(
             children: [
-              const HomeBody(),
+              HomeBody(),
               const CustomBottomBar(currentIndex: 3)
             ]
         )

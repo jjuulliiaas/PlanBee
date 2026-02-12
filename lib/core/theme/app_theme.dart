@@ -25,7 +25,10 @@ class AppTheme {
   static Color get _successGreen => const Color(0xFF22C55E);
   static Color get _successGreenSoft => const Color(0xFFDCFCE7);
   static Color get _errorRed => const Color(0xFFEF4444);
+  static Color get _errorRedSoft => const Color(0xFFFFE9E9);
   static Color get _yellow => const Color(0xFFE5BB46);
+
+  static Color get _shadowColor => const Color(0x1A4F46E5);
 
   // Sizes and forms
 
@@ -133,6 +136,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: _white,
         elevation: 0,
+        shadowColor: _shadowColor,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
@@ -144,9 +148,9 @@ class AppTheme {
           backgroundColor: _accent,
           foregroundColor: _white,
           elevation: 0,
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radiusMedium),
+            borderRadius: BorderRadius.circular(radiusLarge),
           ),
           textStyle: textTheme.bodyMedium,
         ),
@@ -177,28 +181,25 @@ class AppTheme {
           if (states.contains(WidgetState.selected)) {
             return _successGreen;
           }
-          return Colors.transparent;
+          return _hintDisabled;
         }),
-        side: WidgetStateBorderSide.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return BorderSide.none;
-          return BorderSide(color: _hintDisabled, width: 1.5);
-        }),
+        side: BorderSide.none,
         checkColor: WidgetStateProperty.all(_white),
       ),
 
       chipTheme: ChipThemeData(
-        backgroundColor: _white,
-        selectedColor: _accentSoft,
-        disabledColor: _hintDisabled,
-        labelStyle: textTheme.labelSmall,
-        checkmarkColor: _accent,
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        backgroundColor: _errorRedSoft,
+        selectedColor: _errorRed,
+        disabledColor: _errorRed,
+        labelStyle: textTheme.labelSmall?.copyWith(color: _errorRed),
+        checkmarkColor: _errorRed,
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusSmall),
         ),
         side: WidgetStateBorderSide.resolveWith((states) {
           if(states.contains(WidgetState.selected)) return BorderSide.none;
-          return BorderSide(color: _hintDisabled);
+          return BorderSide(color: _errorRed);
         }),
       ),
 

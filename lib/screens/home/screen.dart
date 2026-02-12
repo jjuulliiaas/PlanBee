@@ -18,8 +18,8 @@ class HomeScreen extends StatelessWidget {
         ),
       body: Stack(
         children: [
-          const HomeBody(),
-          const CustomBottomBar(currentIndex: 0)
+          HomeBody(),
+          const CustomBottomBar(currentIndex: 0),
         ]
       )
     );
