@@ -36,6 +36,7 @@ class AppTheme {
   static double get radiusMedium => 12.0.r;
   static double get radiusLarge => 16.0.r;
 
+
   /// Color Scheme
 
   static ColorScheme get _lightColorScheme => ColorScheme(
@@ -128,6 +129,8 @@ class AppTheme {
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,
+        toolbarHeight: 80.h,
+        leadingWidth: 85.w,
       iconTheme: IconThemeData(color: _primaryText),
       titleTextStyle: textTheme.headlineSmall,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -152,8 +155,33 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radiusLarge),
           ),
+          overlayColor: _primaryText,
           textStyle: textTheme.bodyMedium,
         ),
+      ),
+
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: _accent,
+          side: BorderSide(color: _accent, width: 1.5),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radiusLarge),
+          ),
+            textStyle: textTheme.bodySmall,
+        )
+      ),
+
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: _secondaryText,
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radiusLarge),
+          ),
+          textStyle: textTheme.bodyLarge,
+          overlayColor: _accentSoft
+        )
       ),
 
       inputDecorationTheme: InputDecorationTheme(

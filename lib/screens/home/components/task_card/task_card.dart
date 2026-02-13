@@ -25,7 +25,6 @@ class TaskCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
       ),
       elevation: 5,
-      // shadowColor: Color.lerp(colorScheme.surface, colorScheme.primary, 0.1)!,
       child: Container(
         padding: EdgeInsets.all(16.r),
         child: Column(

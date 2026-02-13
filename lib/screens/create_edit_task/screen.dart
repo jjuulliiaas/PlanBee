@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:planbee/screens/home/body.dart';
-import 'package:planbee/widgets/bottom_bar.dart';
+
+import '../../core/utils/app_padding.dart';
+import 'body.dart';
 
 class CreateEditScreen extends StatelessWidget {
   const CreateEditScreen({super.key});
@@ -14,11 +15,25 @@ class CreateEditScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('New Task'),
         titleTextStyle: textScheme.headlineSmall,
+        leading: TextButton(
+            onPressed: () {
+              Navigator.maybePop(context);
+            },
+            child: Text('Cancel')
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {},
+              child: Text('Save')
+          ),
+        ],
       ),
         body: Stack(
             children: [
-              HomeBody(),
-              const CustomBottomBar(currentIndex: 1)
+              Padding(
+                padding: AppPadding.screen(context),
+                child: CreateEditBody(),
+              ),
             ]
         )
     );

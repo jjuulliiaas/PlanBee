@@ -16,7 +16,7 @@ class CustomBottomBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, AppRoutes.home);
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, AppRoutes.create);
+        // Navigator.pushReplacementNamed(context, AppRoutes.create);
         break;
       case 2:
         Navigator.pushReplacementNamed(context, AppRoutes.statistics);

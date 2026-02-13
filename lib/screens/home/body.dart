@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 
 import '../../blocks/task/model.dart';
+import '../../routes.dart';
 import 'components/task_card/task_card.dart';
 
 class HomeBody extends StatelessWidget {
@@ -63,8 +64,9 @@ class HomeBody extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return Padding(
-        padding: AppPadding.screen(context),
+        padding: AppPadding.horizontalOnly(context),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +76,9 @@ class HomeBody extends StatelessWidget {
                   style: textTheme.headlineMedium,
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.create);
+                  },
                   icon: Icon(Icons.add, size: 20.r),
                   label: Text(
                     'Add',
