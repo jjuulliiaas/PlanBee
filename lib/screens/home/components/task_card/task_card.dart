@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:planbee/screens/home/components/task_card/priority_badge.dart';
+import 'package:planbee/widgets/priority_badge.dart';
 import 'package:planbee/widgets/status_badge.dart';
 import '../../../../blocks/task/model.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -21,10 +21,6 @@ class TaskCard extends StatelessWidget {
 
     return Card(
       margin: EdgeInsets.only(bottom: 16.h),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
-      ),
-      elevation: 5,
       child: Container(
         padding: EdgeInsets.all(16.r),
         child: Column(

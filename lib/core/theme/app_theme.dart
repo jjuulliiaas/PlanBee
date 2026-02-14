@@ -138,7 +138,7 @@ class AppTheme {
 
       cardTheme: CardThemeData(
         color: _white,
-        elevation: 0,
+        elevation: 5,
         shadowColor: _shadowColor,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
@@ -187,7 +187,6 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: _white,
-        contentPadding: const EdgeInsets.all(16),
         hintStyle: TextStyle(color: _hintDisabled),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radiusMedium),
@@ -199,8 +198,16 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radiusMedium),
-          borderSide: BorderSide(color: _accent, width: 1.5),
+          borderSide: BorderSide.none,
         ),
+      ),
+
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: _primaryText
+      ),
+
+      dividerTheme: DividerThemeData(
+        color: _accentSoft,
       ),
 
       checkboxTheme: CheckboxThemeData(
@@ -233,14 +240,17 @@ class AppTheme {
 
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return _accent;
-          return _white;
-        }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return _accentSoft;
+          if (states.contains(WidgetState.selected)) return _white;
           return _hintDisabled;
         }),
-        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return _accent;
+          return Colors.transparent;
+        }),
+        trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return _accent;
+          return _hintDisabled;
+        }),
       ),
 
       floatingActionButtonTheme: FloatingActionButtonThemeData(
