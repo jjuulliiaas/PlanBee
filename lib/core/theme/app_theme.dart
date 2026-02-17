@@ -156,7 +156,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(radiusLarge),
           ),
           overlayColor: _primaryText,
-          textStyle: textTheme.bodyMedium,
+          textStyle: textTheme.bodyMedium?.copyWith(color: _white),
         ),
       ),
 
@@ -265,7 +265,12 @@ class AppTheme {
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: _white,
         modalBackgroundColor: _white,
-        elevation: 0,
+        constraints: const BoxConstraints(
+            maxWidth: double.infinity
+        ),
+        elevation: 10,
+        modalElevation: 10,
+        shadowColor: _accent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
               top: Radius.circular(radiusLarge)

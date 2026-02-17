@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/widgets/priority_badge.dart';
 import 'package:planbee/widgets/status_badge.dart';
 import '../../../../blocks/task/model.dart';
-import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/formatted_date.dart';
 import 'check_box.dart';
 import 'info_column.dart';
