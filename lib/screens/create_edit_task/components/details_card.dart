@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:planbee/screens/create_edit_task/components/pickers/date_picker.dart';
 import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:planbee/screens/create_edit_task/components/pickers/category_picker.dart';
 
@@ -40,7 +41,12 @@ class _DetailsCardState extends State<DetailsCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          BasePickerLayout.show(
+                              context: context,
+                              child: const DatePicker()
+                          );
+                        },
                         child: const Text('Set Date')
                     ),
                     SizedBox(width: 8.w),
