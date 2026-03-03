@@ -4,7 +4,8 @@ import 'package:planbee/blocks/category/model.dart';
 
 import '../../../../widgets/app_confirm_button.dart';
 import '../../../../widgets/detail_name.dart';
-import 'base_picker_layout.dart';
+import '../../../../widgets/base_picker_layout.dart';
+import 'create_new_category_picker.dart';
 
 class CategoryPicker extends StatefulWidget {
   const CategoryPicker({super.key});
@@ -26,7 +27,6 @@ class _CategoryPickerState extends State<CategoryPicker> {
     return BasePickerLayout(
       title: 'Choose Category',
       children: [
-        SizedBox(height: 24.h,),
         ListView.separated(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -55,7 +55,13 @@ class _CategoryPickerState extends State<CategoryPicker> {
                 );
               }
               return OutlinedButton(
-                onPressed: () {  },
+                onPressed: () async {
+                  final result = await BasePickerLayout.show(
+                      context: context,
+                      child: const CreateNewCategoryPicker()
+                  );
+                  if(result != null) return print('New Category: ${result['name']}');
+                },
                   child: DetailName(
                     icon: Icons.add,
                     text: 'Create Category',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:planbee/screens/create_edit_task/components/pickers/base_picker_layout.dart';
+import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:planbee/screens/create_edit_task/components/pickers/category_picker.dart';
 
 import '../../../core/utils/app_padding.dart';

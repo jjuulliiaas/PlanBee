@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/theme/app_theme.dart';
 
-import '../../../../core/utils/app_padding.dart';
+import '../core/utils/app_padding.dart';
 
 class BasePickerLayout extends StatelessWidget {
   const BasePickerLayout({
@@ -56,6 +56,7 @@ class BasePickerLayout extends StatelessWidget {
             title,
             style: textTheme.headlineSmall,
           ),
+          SizedBox(height: 24.h,),
           Flexible(
               child: SingleChildScrollView(
                 child: Column(
