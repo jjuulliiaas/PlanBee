@@ -60,6 +60,7 @@ class BasePickerLayout extends StatelessWidget {
           Flexible(
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: children,
                 ),
               )

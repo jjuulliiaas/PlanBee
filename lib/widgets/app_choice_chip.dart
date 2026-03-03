@@ -34,7 +34,14 @@ class AppChoiceChip extends StatelessWidget {
       onSelected: (_) => onSelected(),
       backgroundColor: colorScheme.surface,
       selectedColor: colorScheme.primary,
+      padding: EdgeInsetsGeometry.zero,
       showCheckmark: false,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      labelPadding: EdgeInsets.only(
+        left: leading != null || icon != null ? 0 : 8.w,
+        right: 8.w,
+      ),
+      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
       labelStyle: textTheme.bodySmall?.copyWith(
         color: isSelected
             ? colorScheme.surface

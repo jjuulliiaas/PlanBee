@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/screens/create_edit_task/components/pickers/date_picker.dart';
+import 'package:planbee/screens/create_edit_task/components/pickers/time_picker.dart';
 import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:planbee/screens/create_edit_task/components/pickers/category_picker.dart';
 
 import '../../../core/utils/app_padding.dart';
+import '../../../widgets/app_switcher.dart';
 import '../../../widgets/detail_name.dart';
 
 class DetailsCard extends StatefulWidget {
@@ -51,7 +53,12 @@ class _DetailsCardState extends State<DetailsCard> {
                     ),
                     SizedBox(width: 8.w),
                     OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          BasePickerLayout.show(
+                              context: context,
+                              child: const TimePicker()
+                          );
+                        },
                         child: const Text('Set Time')
                     )
                   ],
@@ -89,24 +96,9 @@ class _DetailsCardState extends State<DetailsCard> {
               ],
             ),
             const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DetailName(
-                  icon: Icons.priority_high_rounded,
-                  text: 'High priority',
-                ),
-                Transform.scale(
-                  scale: 0.8,
-                  child: Switch(
-                      value: _isHighPriority,
-                      onChanged: (bool value) {
-                        print('Priority is changed!');
-                      }
-                  ),
-                )
-              ],
-            ),
+            AppSwitcher(
+              value: _isHighPriority,
+            )
           ],
         ),
       ),
