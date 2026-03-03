@@ -17,7 +17,7 @@ class DetailsCard extends StatefulWidget {
 }
 
 class _DetailsCardState extends State<DetailsCard> {
-  final bool _isHighPriority = false;
+  bool _isHighPriority = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +98,11 @@ class _DetailsCardState extends State<DetailsCard> {
             const Divider(),
             AppSwitcher(
               value: _isHighPriority,
+              onChanged: (bool value) {
+                setState(() {
+                  _isHighPriority = value;
+                });
+              },
             )
           ],
         ),
