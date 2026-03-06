@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:planbee/screens/create_edit_task/components/pickers/date_picker.dart';
-import 'package:planbee/screens/create_edit_task/components/pickers/time_picker.dart';
+import 'package:planbee/blocks/task/provider.dart';
 import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:planbee/screens/create_edit_task/components/pickers/category_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/utils/app_padding.dart';
 import '../../../widgets/app_switcher.dart';
 import '../../../widgets/detail_name.dart';
+import '../controller.dart';
 
-class DetailsCard extends StatefulWidget {
+class DetailsCard extends StatelessWidget {
   const DetailsCard({super.key});
 
   @override
-  State<DetailsCard> createState() => _DetailsCardState();
-}
-
-class _DetailsCardState extends State<DetailsCard> {
-  bool _isHighPriority = false;
-
-  @override
   Widget build(BuildContext context) {
+    final provider = context.read<TaskProvider>();
+    final controller = CreateEditController(provider: context.watch<TaskProvider>());
+
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
@@ -43,22 +40,12 @@ class _DetailsCardState extends State<DetailsCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                        onPressed: () {
-                          BasePickerLayout.show(
-                              context: context,
-                              child: const DatePicker()
-                          );
-                        },
+                        onPressed: () => controller.onSelectDate(context),
                         child: const Text('Set Date')
                     ),
                     SizedBox(width: 8.w),
                     OutlinedButton(
-                        onPressed: () {
-                          BasePickerLayout.show(
-                              context: context,
-                              child: const TimePicker()
-                          );
-                        },
+                        onPressed: () => controller.onSelectTime(context),
                         child: const Text('Set Time')
                     )
                   ],
@@ -97,12 +84,8 @@ class _DetailsCardState extends State<DetailsCard> {
             ),
             const Divider(),
             AppSwitcher(
-              value: _isHighPriority,
-              onChanged: (bool value) {
-                setState(() {
-                  _isHighPriority = value;
-                });
-              },
+              value: provider.isHighPriority,
+              onChanged: controller.onTogglePriority,
             )
           ],
         ),

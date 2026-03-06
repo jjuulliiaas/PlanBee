@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:planbee/blocks/task/provider.dart';
+import 'package:planbee/screens/create_edit_task/controller.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/utils/app_padding.dart';
 import 'body.dart';
@@ -8,6 +11,9 @@ class CreateEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<TaskProvider>();
+    final controller = CreateEditController(provider: provider);
+
     final theme = Theme.of(context);
     final textScheme = theme.textTheme;
 
@@ -23,8 +29,10 @@ class CreateEditScreen extends StatelessWidget {
         ),
         actions: [
           TextButton(
-              onPressed: () {},
-              child: Text('Save')
+              onPressed: () => controller.onSaveTask(context),
+              child: provider.isLoading
+                ? CircularProgressIndicator(strokeWidth: 1,)
+                : Text('Save')
           ),
         ],
       ),
