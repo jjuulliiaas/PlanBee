@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:planbee/blocks/category/model.dart';
 import 'package:planbee/blocks/category/provider.dart';
@@ -9,12 +8,15 @@ import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../blocks/task/model.dart';
+import '../../blocks/task/repository.dart';
 import 'components/pickers/create_new_category_picker.dart';
 import 'components/pickers/time_picker.dart';
 
 class CreateEditController {
   final TaskProvider taskProvider;
   final CategoryProvider categoryProvider;
+
+  final TaskRepository _repository = TaskRepository();
 
   CreateEditController({
     required this.taskProvider,
@@ -51,6 +53,11 @@ class CreateEditController {
         status: TaskStatus.planned
       );
 
+      await _repository.saveTask(newTask);
+
+      taskProvider.addTask(newTask);
+
+      taskProvider.reset();
       if (context.mounted) Navigator.pop(context);
 
     } catch (e) {
@@ -123,5 +130,9 @@ class CreateEditController {
     }
   }
 
+  void onCancel(BuildContext context) {
+    taskProvider.reset();
+    Navigator.pop(context);
+  }
 
 }

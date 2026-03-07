@@ -25,4 +25,32 @@ class TaskModel {
     this.status = TaskStatus.planned
 });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'category_id': category?.id,
+      'created_at': createdAt.toIso8601String(),
+      'deadline': deadline.toIso8601String(),
+      'is_high_priority': isHighPriority ? 1 : 0,
+      'time_spent_ms': timeSpent?.inMilliseconds,
+      'status': status.name
+    };
+  }
+
+  factory TaskModel.fromMap(Map<String, dynamic> map, {CategoryModel? category}) {
+    return TaskModel(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      category: category,
+      createdAt: DateTime.parse(map['created_at']),
+      deadline: DateTime.parse(map['deadline']),
+      isHighPriority: map['is_high_priority'] == 1,
+      timeSpent: map['time_spent_ms'] != null ? Duration(milliseconds: map['time_spent_ms']) : null,
+      status: TaskStatus.values.byName(map['status']),
+    );
+  }
+
 }

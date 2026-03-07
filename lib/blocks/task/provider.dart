@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../category/model.dart';
+import 'model.dart';
 
 class TaskProvider extends ChangeNotifier{
   String _title = '';
@@ -27,6 +28,9 @@ class TaskProvider extends ChangeNotifier{
     selectedDate != null &&
     selectedTime != null;
   }
+
+  List<TaskModel> _tasks = [];
+  List<TaskModel> get tasks => _tasks;
 
   set title(String value) {
     _title = value;
@@ -68,6 +72,11 @@ class TaskProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  set tasks(List<TaskModel> tasks) {
+    _tasks = tasks;
+    notifyListeners();
+  }
+
   DateTime? get fullDeadline {
     if (_selectedDate == null || _selectedTime == null) {
       return null;
@@ -86,6 +95,12 @@ class TaskProvider extends ChangeNotifier{
     _selectedTime = null;
     _selectedCategory = null;
     _isHighPriority = false;
+    notifyListeners();
+  }
+
+  void addTask(TaskModel task) {
+    _tasks.add(task);
+    _tasks.sort((a, b) => a.deadline.compareTo(b.deadline));
     notifyListeners();
   }
 }

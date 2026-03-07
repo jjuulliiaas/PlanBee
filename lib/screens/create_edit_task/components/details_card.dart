@@ -146,7 +146,7 @@ class _PickedChip extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
         decoration: BoxDecoration(
-          color: theme.colorScheme.primary,
+          color: theme.colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(15.r),
           border: Border.all(color: theme.colorScheme.primary),
         ),

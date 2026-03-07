@@ -31,7 +31,7 @@ class CreateEditScreen extends StatelessWidget {
           titleTextStyle: textScheme.headlineSmall,
           leading: TextButton(
               onPressed: () {
-                Navigator.maybePop(context);
+                controller.onCancel(context);
                 },
               child: Text('Cancel')
               ),

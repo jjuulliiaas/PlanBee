@@ -13,4 +13,21 @@ class CategoryModel {
     required this.iconColor,
 });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'icon_code': icon.codePoint,
+      'color_value': iconColor.r,
+    };
+  }
+
+  factory CategoryModel.fromMap(Map<String, dynamic> map) {
+    return CategoryModel(
+      id: map['id'],
+      name: map['name'],
+      icon: IconData(map['icon_code']),
+      iconColor: Color(map['color_value']),
+    );
+  }
 }
