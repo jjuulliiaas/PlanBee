@@ -69,7 +69,7 @@ class TaskCard extends StatelessWidget {
               children: [
                 InfoColumn(
                   label: 'Category',
-                  value: task.categoryId ?? 'General',
+                  value: task.category?.id ?? 'General',
                   colorValue: colorScheme.primary,
                 ),
                 InfoColumn(

@@ -19,14 +19,12 @@ class DatePicker extends StatefulWidget {
 }
 
 class _DatePickerState extends State<DatePicker> {
-  DateTime _selectedDate = DateTime.now();
+  DateTime? _selectedDate;
 
   @override
   void initState() {
-    if(widget.initialDate != null) {
-      _selectedDate = widget.initialDate!;
-    }
     super.initState();
+    _selectedDate = widget.initialDate;
   }
 
   void _onDateChanged(DateTime date) {
@@ -50,13 +48,13 @@ class _DatePickerState extends State<DatePicker> {
           children: [
             AppChoiceChip(
               label: 'Today',
-              isSelected: DateUtils.isSameDay(_selectedDate, today),
+              isSelected: _selectedDate != null && DateUtils.isSameDay(_selectedDate!, today),
               onSelected: () => _onDateChanged(today),
             ),
             SizedBox(width: 16.w,),
             AppChoiceChip(
               label: 'Tomorrow',
-              isSelected: DateUtils.isSameDay(_selectedDate, tomorrow),
+            isSelected: _selectedDate != null && DateUtils.isSameDay(_selectedDate!, tomorrow),
               onSelected: () => _onDateChanged(tomorrow),
             )
           ],
@@ -68,7 +66,16 @@ class _DatePickerState extends State<DatePicker> {
         ),
         heightSpace,
         AppConfirmButton(
-            onTap: () {}
+            onTap: () {
+              if(_selectedDate != null) {
+                Navigator.maybePop(context, _selectedDate);
+              }
+              else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please select a date')),
+              );
+              }
+            }
         )
       ],
     );

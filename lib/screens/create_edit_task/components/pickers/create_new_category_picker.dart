@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planbee/widgets/base_picker_layout.dart';
 
+import '../../../../blocks/category/model.dart';
 import '../../../../widgets/app_confirm_button.dart';
 import 'icon_picker.dart';
 
@@ -21,6 +22,7 @@ class _CreateNewCategoryPickerState extends State<CreateNewCategoryPicker> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
 
     return BasePickerLayout(
         title: 'Create New Category',
@@ -46,12 +48,17 @@ class _CreateNewCategoryPickerState extends State<CreateNewCategoryPicker> {
             },
           ),
           AppConfirmButton(
-            onTap: (_controller.text.trim().isEmpty || _chosenIcon == null)
-                ? null
-                : () => Navigator.pop(context, {
-                  'name': _controller.text.trim(),
-                  'icon': _chosenIcon
-            }),
+              onTap: (_controller.text.trim().isEmpty || _chosenIcon == null)
+                  ? null
+                  : () {
+                final newCategory = CategoryModel(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  name: _controller.text.trim(),
+                  icon: _chosenIcon!,
+                  iconColor: colorScheme.primary,
+                );
+                Navigator.pop(context, newCategory);
+              },
           )
         ]
     );

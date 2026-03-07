@@ -1,10 +1,12 @@
+import 'package:planbee/blocks/category/model.dart';
+
 enum TaskStatus {planned, inProgress, completed, missed}
 
 class TaskModel {
   final String id;
   final String title;
   final String? description;
-  final String? categoryId;
+  final CategoryModel? category;
   final DateTime createdAt;
   final DateTime deadline;
   final bool isHighPriority;
@@ -15,7 +17,7 @@ class TaskModel {
     required this.id,
     required this.title,
     this.description,
-    this.categoryId,
+    this.category,
     required this.createdAt,
     required this.deadline,
     this.isHighPriority = false,

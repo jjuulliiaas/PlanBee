@@ -5,6 +5,8 @@ import 'package:planbee/core/theme/app_theme.dart';
 import 'package:planbee/routes.dart';
 import 'package:provider/provider.dart';
 
+import 'blocks/category/provider.dart';
+
 void main() {
   runApp(const PlanBee());
 }
@@ -15,24 +17,25 @@ class PlanBee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => TaskProvider())
-    ],
-      child: ScreenUtilInit(
-        designSize: const Size(393, 852),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return MaterialApp(
-            title: 'PlanBee',
-            theme: AppTheme.lightTheme,
-            themeMode: ThemeMode.light,
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: AppRoutes.generateRoute,
-            initialRoute: AppRoutes.home,
-          );
-        },
-      ),
+        providers: [
+          ChangeNotifierProvider(create: (_) => CategoryProvider()),
+          ChangeNotifierProvider(create: (_) => TaskProvider()),
+        ],
+        child: ScreenUtilInit(
+          designSize: const Size(393, 852),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
+            return MaterialApp(
+              title: 'PlanBee',
+              theme: AppTheme.lightTheme,
+              themeMode: ThemeMode.light,
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: AppRoutes.generateRoute,
+              initialRoute: AppRoutes.home,
+            );
+          },
+        ),
     );
   }
 }

@@ -1,41 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:planbee/blocks/category/model.dart';
+import 'package:planbee/blocks/category/provider.dart';
 import 'package:planbee/blocks/task/provider.dart';
+import 'package:planbee/screens/create_edit_task/components/pickers/category_picker.dart';
 import 'package:planbee/screens/create_edit_task/components/pickers/date_picker.dart';
 import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../blocks/task/model.dart';
+import 'components/pickers/create_new_category_picker.dart';
 import 'components/pickers/time_picker.dart';
 
 class CreateEditController {
-  final TaskProvider provider;
+  final TaskProvider taskProvider;
+  final CategoryProvider categoryProvider;
 
-  CreateEditController({required this.provider});
+  CreateEditController({
+    required this.taskProvider,
+    required this.categoryProvider
+  });
 
   Future<void> onSaveTask(BuildContext context) async {
-    if(provider.title.isEmpty) return;
+    if (taskProvider.title.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a task title')),
+      );
+      return;
+    }
 
-    provider.isLoading = true;
+    taskProvider.isLoading = true;
+
+    final deadline = taskProvider.fullDeadline;
+    if (deadline == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please set both date and time')),
+      );
+      return;
+    }
 
     try {
       final newTask = TaskModel(
         id: const Uuid().v4(),
-        title: provider.title,
-        description: provider.description,
-        categoryId: provider.categoryId,
+        title: taskProvider.title,
+        description: taskProvider.description,
+        category: taskProvider.selectedCategory,
         createdAt: DateTime.now(),
-        deadline: provider.fullDeadline,
-        isHighPriority: provider.isHighPriority,
+        deadline: deadline,
+        isHighPriority: taskProvider.isHighPriority,
+        status: TaskStatus.planned
       );
 
-      print('Task Saved: ${newTask.title} with deadline ${newTask.deadline}');
+      if (context.mounted) Navigator.pop(context);
 
-      Navigator.maybePop(context);
     } catch (e) {
       print('Error saving task: $e');
     } finally {
-      provider.isLoading = false;
+      taskProvider.isLoading = false;
     }
   }
 
@@ -43,11 +64,11 @@ class CreateEditController {
     final DateTime? pickedDate = await BasePickerLayout.show<DateTime>(
         context: context,
         child: DatePicker(
-          initialDate: provider.selectedDate,
+          initialDate: taskProvider.selectedDate,
         )
     );
     if(pickedDate != null) {
-      provider.selectedDate = pickedDate;
+      taskProvider.selectedDate = pickedDate;
     }
   }
 
@@ -55,16 +76,51 @@ class CreateEditController {
     final TimeOfDay? pickedTime = await BasePickerLayout.show<TimeOfDay>(
         context: context,
         child: TimePicker(
-          initialTime: provider.selectedTime,
+          initialTime: taskProvider.selectedTime,
         )
     );
     if(pickedTime != null) {
-      provider.selectedTime = pickedTime;
+      taskProvider.selectedTime = pickedTime;
     }
   }
 
+  Future<void> onSelectCategory(BuildContext context) async {
+    taskProvider.tempSelectedCategory = taskProvider.selectedCategory;
+
+    await BasePickerLayout.show<CategoryModel>(
+        context: context,
+        child: CategoryPicker(controller: this)
+    );
+
+    taskProvider.tempSelectedCategory = null;
+  }
+
   void onTogglePriority(bool value) {
-    provider.isHighPriority = value;
+    taskProvider.isHighPriority = value;
+  }
+
+  void onTempSelectCategory(CategoryModel category) {
+    taskProvider.tempSelectedCategory = category;
+  }
+
+  void onConfirmCategory(BuildContext context) {
+    if (taskProvider.tempSelectedCategory != null) {
+      taskProvider.selectedCategory = taskProvider.tempSelectedCategory;
+
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> onCreateNewCategory(BuildContext context) async {
+    final newCat = await BasePickerLayout.show<CategoryModel>(
+      context: context,
+      child: const CreateNewCategoryPicker(),
+    );
+
+    if (newCat != null) {
+      categoryProvider.addCategory(newCat);
+      onTempSelectCategory(newCat);
+    }
   }
 
 

@@ -1,82 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:planbee/blocks/category/model.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../blocks/category/provider.dart';
+import '../../../../blocks/task/provider.dart';
 import '../../../../widgets/app_confirm_button.dart';
-import '../../../../widgets/detail_name.dart';
 import '../../../../widgets/base_picker_layout.dart';
-import 'create_new_category_picker.dart';
+import '../../../../widgets/detail_name.dart';
+import '../../controller.dart';
 
-class CategoryPicker extends StatefulWidget {
-  const CategoryPicker({super.key});
+class CategoryPicker extends StatelessWidget {
+  const CategoryPicker({super.key, required this.controller});
 
-  @override
-  State<CategoryPicker> createState() => _CategoryPickerState();
-}
-
-class _CategoryPickerState extends State<CategoryPicker> {
-  String selectedId = '';
+  final CreateEditController controller;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final categories = CategoryModel.mockCategories;
+    final taskProvider = context.watch<TaskProvider>();
+    final categoryProvider = context.watch<CategoryProvider>();
+
+    final controller = CreateEditController(
+      taskProvider: taskProvider,
+      categoryProvider: categoryProvider,
+    );
+
+    final categories = categoryProvider.categories;
 
     return BasePickerLayout(
       title: 'Choose Category',
       children: [
-        ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+        SizedBox(
+          height: 350.h,
+          child: ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
             itemCount: categories.length + 1,
-            separatorBuilder: (context, index) => SizedBox(height: 4.h,),
+            separatorBuilder: (context, index) => SizedBox(height: 8.h),
             itemBuilder: (context, index) {
-              if(index < categories.length) {
+              if (index < categories.length) {
                 final item = categories[index];
-                final isSelected = selectedId == item.id;
+
+                final isSelected = taskProvider.tempSelectedCategory?.id == item.id;
 
                 return OutlinedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedId = item.id;
-                      });
-                    },
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: isSelected ? colorScheme.primary : Colors.transparent,
-                    ),
-                    child: DetailName(
-                      icon: item.icon,
-                      text: item.name,
-                      alignment: MainAxisAlignment.start,
-                      forceWhite: isSelected,
-                    )
+                  onPressed: () => controller.onTempSelectCategory(item),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: isSelected ? colorScheme.primary : Colors.transparent,
+                  ),
+                  child: DetailName(
+                    icon: item.icon,
+                    text: item.name,
+                    alignment: MainAxisAlignment.start,
+                    forceWhite: isSelected,
+                  ),
                 );
               }
-              return OutlinedButton(
-                onPressed: () async {
-                  final result = await BasePickerLayout.show(
-                      context: context,
-                      child: const CreateNewCategoryPicker()
-                  );
-                  if(result != null) return print('New Category: ${result['name']}');
-                },
-                  child: DetailName(
-                    icon: Icons.add,
-                    text: 'Create Category',
-                    alignment: MainAxisAlignment.start,
-                  )
 
+              return OutlinedButton(
+                onPressed: () => controller.onCreateNewCategory(context),
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                ),
+                child: const DetailName(
+                  icon: Icons.add,
+                  text: 'Create Category',
+                  alignment: MainAxisAlignment.start,
+                ),
               );
             },
+          ),
         ),
-        SizedBox(height: 24.h,),
+
+        const Divider(),
+        SizedBox(height: 16.h),
+
         AppConfirmButton(
-          onTap: selectedId.isEmpty
-          ? null
-          : () => Navigator.pop(context, selectedId),
-        )
+          onTap: taskProvider.tempSelectedCategory == null
+              ? null
+              : () => controller.onConfirmCategory(context),
+        ),
       ],
     );
   }

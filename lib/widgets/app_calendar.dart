@@ -9,7 +9,7 @@ class AppCalendar extends StatelessWidget {
     required this.onDateChanged,
   });
 
-  final DateTime selectedDate;
+  final DateTime? selectedDate;
   final ValueChanged<DateTime> onDateChanged;
 
 
@@ -19,13 +19,14 @@ class AppCalendar extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    final firstDate = DateTime.now().subtract(const Duration(days: 365));
-    final lastDate = DateTime.now().add(const Duration(days: 3650));
+    final now = DateTime.now();
+    final firstDate = now.subtract(const Duration(days: 365));
+    final lastDate = now.add(const Duration(days: 3650));
 
     return TableCalendar(
       firstDay: firstDate,
       lastDay: lastDate,
-      focusedDay: selectedDate,
+      focusedDay: selectedDate ?? now,
       currentDay: DateTime.now(),
       selectedDayPredicate: (day) => isSameDay(selectedDate, day),
       onDaySelected: (selectedDay, focusedDay) {
@@ -63,6 +64,8 @@ class AppCalendar extends StatelessWidget {
 
         defaultTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.secondary),
         outsideTextStyle: textTheme.bodySmall!.copyWith(color: colorScheme.outline),
+
+        canMarkersOverflow: true,
       ),
 
       rowHeight: 45.h,

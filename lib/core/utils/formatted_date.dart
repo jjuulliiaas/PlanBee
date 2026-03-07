@@ -1,3 +1,15 @@
+import 'package:intl/intl.dart';
+
+class DateHelper{
+  static String formatDeadlineDate(DateTime date) {
+    return DateFormat('MMM, d').format(date);
+  }
+
+  static String formatFullDate(DateTime date) {
+    return DateFormat('dd.MM.yyyy').format(date);
+  }
+}
+
 String getFormattedDate(DateTime date) {
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);

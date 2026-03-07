@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:planbee/core/utils/app_padding.dart';
+import 'package:provider/provider.dart';
+
+import '../../../blocks/task/provider.dart';
 
 class InputCard extends StatelessWidget {
   const InputCard({
@@ -16,6 +19,8 @@ class InputCard extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
+    final provider = context.read<TaskProvider>();
+
     return Card(
       elevation: 10,
       child: Container(
@@ -24,6 +29,7 @@ class InputCard extends StatelessWidget {
           children: [
             TextFormField(
               controller: titleController,
+              onChanged: (value) => provider.title = value,
               style: textTheme.headlineLarge,
               maxLines: null,
               minLines: 1,
@@ -35,6 +41,7 @@ class InputCard extends StatelessWidget {
             const Divider(),
             TextFormField(
               controller: descriptionController,
+              onChanged: (value) => provider.description = value,
               style: textTheme.bodyLarge,
               maxLines: null,
               keyboardType: TextInputType.multiline,
