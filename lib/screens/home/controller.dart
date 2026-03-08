@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planbee/routes.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocks/task/model.dart';
@@ -19,7 +20,7 @@ class HomeController {
       final allTasks = await _repository.fetchTasks();
       _provider.tasks = allTasks;
     } catch (e) {
-      print('Error fetching tasks: $e');
+      // print('Error fetching tasks: $e');
     } finally {
       _provider.isLoading = false;
     }
@@ -33,5 +34,13 @@ class HomeController {
 
   void navigateToCreateTask(String routeName) {
     Navigator.pushNamed(context, routeName);
+  }
+
+  void navigateToTaskDetails(TaskModel task) {
+    Navigator.pushNamed(
+      context,
+      AppRoutes.taskDetails,
+      arguments: task,
+    );
   }
 }

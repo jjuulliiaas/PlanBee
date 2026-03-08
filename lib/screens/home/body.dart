@@ -70,6 +70,7 @@ class HomeBody extends StatelessWidget {
                 return TaskCard(
                   task: task,
                   onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
+                  onTap: () => controller.navigateToTaskDetails(task),
                 );
               },
             ),
