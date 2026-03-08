@@ -18,7 +18,7 @@ class CategoryModel {
       'id': id,
       'name': name,
       'icon_code': icon.codePoint,
-      'color_value': iconColor.r,
+      'color_value': iconColor.value,
     };
   }
 
@@ -26,8 +26,11 @@ class CategoryModel {
     return CategoryModel(
       id: map['id'],
       name: map['name'],
-      icon: IconData(map['icon_code']),
-      iconColor: Color(map['color_value']),
+      icon: IconData(
+        map['icon_code'] as int,
+        fontFamily: 'MaterialIcons',
+      ),
+      iconColor: Color(map['color_value'] as int),
     );
   }
 }

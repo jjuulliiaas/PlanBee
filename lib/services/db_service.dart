@@ -69,6 +69,11 @@ class DatabaseService {
 
   Future<void> insertTask(TaskModel task) async {
     final db = await instance.database;
+
+    if (task.category != null) {
+      await insertCategory(task.category!);
+    }
+
     await db.insert('tasks', task.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
@@ -77,18 +82,19 @@ class DatabaseService {
     final db = await instance.database;
 
     final result = await db.rawQuery('''
-      SELECT tasks.*, 
-             categories.name as cat_name, 
-             categories.icon_code as cat_icon, 
-             categories.color_value as cat_color
-      FROM tasks
-      LEFT JOIN categories ON tasks.category_id = categories.id
-      ORDER BY tasks.deadline ASC
-    ''');
+    SELECT tasks.*, 
+           categories.name as cat_name, 
+           categories.icon_code as cat_icon, 
+           categories.color_value as cat_color
+    FROM tasks
+    LEFT JOIN categories ON tasks.category_id = categories.id
+    ORDER BY tasks.deadline ASC
+  ''');
 
     return result.map((json) {
       CategoryModel? category;
-      if (json['category_id'] != null) {
+
+      if (json['category_id'] != null && json['cat_name'] != null) {
         category = CategoryModel(
           id: json['category_id'] as String,
           name: json['cat_name'] as String,
@@ -96,6 +102,7 @@ class DatabaseService {
           iconColor: Color(json['cat_color'] as int),
         );
       }
+
       return TaskModel.fromMap(json, category: category);
     }).toList();
   }

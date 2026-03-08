@@ -9,8 +9,9 @@ import 'info_column.dart';
 
 class TaskCard extends StatelessWidget {
   final TaskModel task;
+  final ValueChanged<bool?> onStatusChanged;
 
-  const TaskCard({super.key, required this.task});
+  const TaskCard({super.key, required this.task, required this.onStatusChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class TaskCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
-                    Icons.boy,  // replace with dynamic icons
+                    task.category?.icon ?? Icons.task_alt,  // replace with dynamic icons
                     size: 20.r,
                     color: colorScheme.primary
                 ),
@@ -54,9 +55,7 @@ class TaskCard extends StatelessWidget {
 
                 CustomCheckbox(
                   isChecked: task.status == TaskStatus.completed,
-                  onChanged: (value) {
-                    print('Task Completed!!!');
-                  },
+                  onChanged: onStatusChanged,
                 ),
               ],
             ),
@@ -69,7 +68,7 @@ class TaskCard extends StatelessWidget {
               children: [
                 InfoColumn(
                   label: 'Category',
-                  value: task.category?.id ?? 'General',
+                  value: task.category?.name ?? 'General',
                   colorValue: colorScheme.primary,
                 ),
                 InfoColumn(

@@ -103,4 +103,12 @@ class TaskProvider extends ChangeNotifier{
     _tasks.sort((a, b) => a.deadline.compareTo(b.deadline));
     notifyListeners();
   }
+
+  void updateTaskStatusLocally(String id, TaskStatus newStatus) {
+    final index = _tasks.indexWhere((t) => t.id == id);
+    if (index != -1) {
+      _tasks[index] = _tasks[index].copyWith(status: newStatus);
+      notifyListeners();
+    }
+  }
 }

@@ -53,4 +53,20 @@ class TaskModel {
     );
   }
 
+  TaskModel copyWith({
+    TaskStatus? status,
+  }) {
+    return TaskModel(
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+      createdAt: createdAt,
+      deadline: deadline,
+      isHighPriority: isHighPriority,
+      timeSpent: timeSpent,
+      status: status ?? this.status,
+    );
+  }
+
 }

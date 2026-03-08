@@ -1,61 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:planbee/blocks/task/provider.dart';
 import 'package:planbee/core/utils/app_padding.dart';
+import 'package:provider/provider.dart';
 
-import '../../blocks/task/model.dart';
 import '../../routes.dart';
 import 'components/task_card/task_card.dart';
+import 'controller.dart';
 
 class HomeBody extends StatelessWidget {
-   HomeBody({super.key});
-
-  final List<TaskModel> mockTasks = [
-    TaskModel(
-      id: '1',
-      title: 'Захист курсової роботи з дисципліни бла бла бла',
-      createdAt: DateTime.now(),
-      deadline: DateTime.now().add(const Duration(hours: 2)),
-      isHighPriority: true,
-      status: TaskStatus.inProgress,
-    ),
-    TaskModel(
-      id: '2',
-      title: 'Купити продукти: макарони, помідори, огірок, мандарин',
-      createdAt: DateTime.now(),
-      deadline: DateTime.now().add(const Duration(days: 1)),
-      status: TaskStatus.planned,
-    ),
-    TaskModel(
-      id: '3',
-      title: 'Захист курсової роботи',
-      createdAt: DateTime.now(),
-      deadline: DateTime.now().add(const Duration(hours: 2)),
-      isHighPriority: true,
-      status: TaskStatus.completed,
-    ),
-    TaskModel(
-      id: '4',
-      title: 'Купити продукти',
-      createdAt: DateTime.now(),
-      deadline: DateTime.now().add(const Duration(days: 1)),
-      status: TaskStatus.missed,
-    ),
-    TaskModel(
-      id: '5',
-      title: 'Захист курсової роботи',
-      createdAt: DateTime.now(),
-      deadline: DateTime.now().add(const Duration(hours: 2)),
-      isHighPriority: true,
-      status: TaskStatus.inProgress,
-    ),
-    TaskModel(
-      id: '6',
-      title: 'Купити продукти',
-      createdAt: DateTime.now(),
-      deadline: DateTime.now().add(const Duration(days: 1)),
-      status: TaskStatus.planned,
-    ),
-  ];
+  const HomeBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,43 +17,81 @@ class HomeBody extends StatelessWidget {
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
+    final controller = HomeController(context);
+    final taskProvider = context.watch<TaskProvider>();
+
+    Future.microtask(() {
+      if (taskProvider.tasks.isEmpty && !taskProvider.isLoading) {
+        controller.fetchAllTasks();
+      }
+    });
+
+    final todayTasks = taskProvider.tasks.where((task) {
+      final now = DateTime.now();
+      return task.deadline.year == now.year &&
+          task.deadline.month == now.month &&
+          task.deadline.day == now.day;
+    }).toList();
+
     return Padding(
-        padding: AppPadding.horizontalOnly(context),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Today\'s plan',
-                  style: textTheme.headlineMedium,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.create);
-                  },
-                  icon: Icon(Icons.add, size: 20.r),
-                  label: Text(
-                    'Add',
-                    style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 24.h),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 100.h),
-                itemCount: mockTasks.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return TaskCard(task: mockTasks[index]);
-                },
+      padding: AppPadding.horizontalOnly(context),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Today\'s plan',
+                style: textTheme.headlineMedium,
               ),
+              ElevatedButton.icon(
+                onPressed: () => controller.navigateToCreateTask(AppRoutes.create),
+                icon: Icon(Icons.add, size: 20.r),
+                label: Text(
+                  'Add',
+                  style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 24.h),
+          Expanded(
+            child: taskProvider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : todayTasks.isEmpty
+                ? _buildEmptyState(textTheme)
+                : ListView.builder(
+              padding: EdgeInsets.only(bottom: 100.h),
+              itemCount: todayTasks.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                final task = todayTasks[index];
+                return TaskCard(
+                  task: task,
+                  onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
+                );
+              },
             ),
-          ],
-        )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(TextTheme textTheme) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.wb_sunny_outlined, size: 50.r, color: Colors.grey),
+          SizedBox(height: 10.h),
+          Text(
+            'No tasks for today! 🐝',
+            style: textTheme.bodyLarge?.copyWith(color: Colors.grey),
+          ),
+        ],
+      ),
     );
   }
 }
