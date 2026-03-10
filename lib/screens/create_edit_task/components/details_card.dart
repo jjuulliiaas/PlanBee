@@ -8,6 +8,7 @@ import '../../../core/utils/app_padding.dart';
 import '../../../core/utils/formatted_date.dart';
 import '../../../widgets/app_switcher.dart';
 import '../../../widgets/detail_name.dart';
+import '../../../widgets/picked_chip.dart';
 import '../controller.dart';
 
 class DetailsCard extends StatelessWidget {
@@ -48,7 +49,7 @@ class DetailsCard extends StatelessWidget {
                           child: const Text('Set Date')
                       )
                     else
-                      _PickedChip(
+                      PickedChip(
                         label: DateHelper.formatDeadlineDate(provider.selectedDate!),
                         onTap: () => controller.onSelectDate(context),
                       ),
@@ -61,7 +62,7 @@ class DetailsCard extends StatelessWidget {
                           child: const Text('Set Time')
                       )
                     else
-                      _PickedChip(
+                      PickedChip(
                         label: provider.selectedTime!.format(context),
                         onTap: () => controller.onSelectDate(context),
                       ),
@@ -106,7 +107,7 @@ class DetailsCard extends StatelessWidget {
                 else
                   Row(
                     children: [
-                      _PickedChip(
+                      PickedChip(
                         icon: provider.selectedCategory!.icon,
                         label: provider.selectedCategory!.name,
                         onTap: () => controller.onSelectCategory(context),
@@ -130,37 +131,6 @@ class DetailsCard extends StatelessWidget {
   }
 }
 
-
-class _PickedChip extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-  final IconData? icon;
-
-  const _PickedChip({required this.label, required this.onTap, this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(15.r),
-          border: Border.all(color: theme.colorScheme.primary),
-        ),
-        child: Row(
-          children: [
-            if (icon != null) Icon(icon, size: 15.sp, color: theme.colorScheme.primary),
-            if (icon != null) SizedBox(width: 4.w),
-            Text(label, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary)),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _ResetIcon extends StatelessWidget {
   const _ResetIcon({required this.onTap});

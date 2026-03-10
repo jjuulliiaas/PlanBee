@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../blocks/task/model.dart';
-import '../../core/utils/app_padding.dart';
+import 'body.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   const TaskDetailsScreen({super.key, required this.task});
@@ -27,24 +27,15 @@ class TaskDetailsScreen extends StatelessWidget {
             TextButton(
               onPressed: () {},
               child: Text(
-                'Save',
-                // style: TextStyle(
-                //   color: provider.canSave
-                //       ? theme.colorScheme.primary
-                //       : theme.colorScheme.secondary,
-                // ),
+                'Edit',
+                style: TextStyle(
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ),
           ],
         ),
-        body: Stack(
-            children: [
-              Padding(
-                padding: AppPadding.screen(context),
-                child: Text('its task details'),
-              ),
-            ]
-        )
+        body: TaskDetailsBody(task: task,)
     );
   }
 }
