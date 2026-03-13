@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 import 'package:planbee/widgets/priority_badge.dart';
 import 'package:planbee/widgets/status_badge.dart';
+import 'package:provider/provider.dart';
 import '../../../../blocks/task/model.dart';
+import '../../../../blocks/timer/provider.dart';
 import '../../../../core/utils/formatted_date.dart';
 import 'check_box.dart';
 import 'info_column.dart';
@@ -22,6 +24,11 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final timerProvider = context.watch<TimerProvider>();
+
+    final bool isThisTaskActive = timerProvider.isRunning &&
+        timerProvider.activeTaskId == task.id;
+
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
@@ -89,7 +96,7 @@ class TaskCard extends StatelessWidget {
                 ],
               ),
 
-              if (task.status == TaskStatus.inProgress) ...[
+              if (isThisTaskActive) ...[
                 SizedBox(height: 16.h),
                 Row(
                   children: [
@@ -99,7 +106,7 @@ class TaskCard extends StatelessWidget {
                       size: 15.r,
                     ),
                     Text(
-                      'Timer is running...',
+                      'Timer is running... ${timerProvider.formattedTime}',
                       style: textTheme.labelLarge?.copyWith(color: colorScheme.outline),
                     ),
                   ],

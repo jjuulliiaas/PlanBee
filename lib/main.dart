@@ -6,6 +6,7 @@ import 'package:planbee/routes.dart';
 import 'package:provider/provider.dart';
 
 import 'blocks/category/provider.dart';
+import 'blocks/timer/provider.dart';
 
 void main() {
   runApp(const PlanBee());
@@ -20,6 +21,7 @@ class PlanBee extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => CategoryProvider()),
           ChangeNotifierProvider(create: (_) => TaskProvider()),
+          ChangeNotifierProvider(create: (_) => TimerProvider()),
         ],
         child: ScreenUtilInit(
           designSize: const Size(393, 852),

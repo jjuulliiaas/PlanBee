@@ -8,9 +8,16 @@ class TimerProvider extends ChangeNotifier {
   int _actualSecondsElapsed = 0;
   bool _isRunning = false;
 
+  String? _activeTaskId;
+
   int get secondsRemaining => _secondsRemaining;
   bool get isRunning => _isRunning;
-  double get progress => _totalTime == 0 ? 0 : _secondsRemaining / _totalTime;
+  String? get activeTaskId => _activeTaskId;
+
+  double get progress {
+    if (_totalTime <= 0) return 0.0;
+    return _secondsRemaining / _totalTime;
+  }
 
   String get formattedTime {
     int mins = _secondsRemaining ~/ 60;
@@ -18,8 +25,9 @@ class TimerProvider extends ChangeNotifier {
     return '${mins.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
   }
 
-  void startTimer(int minutes) {
+  void startTimer(int minutes, String taskId) {
     _timer?.cancel();
+    _activeTaskId = taskId;
     _secondsRemaining = minutes * 60;
     _totalTime = minutes * 60;
     _actualSecondsElapsed = 0;
@@ -37,6 +45,7 @@ class TimerProvider extends ChangeNotifier {
   }
 
   void _resumeTimer() {
+    _timer?.cancel();
     _isRunning = true;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_secondsRemaining > 0) {
@@ -44,16 +53,16 @@ class TimerProvider extends ChangeNotifier {
         _actualSecondsElapsed++;
         notifyListeners();
       } else {
-        _timer?.cancel();
-        _isRunning = false;
-        notifyListeners();
+        stopTimer();
       }
     });
+    notifyListeners();
   }
 
   void stopTimer() {
     _timer?.cancel();
     _isRunning = false;
+    _activeTaskId = null;
     _secondsRemaining = 0;
     _totalTime = 0;
     notifyListeners();
@@ -63,5 +72,11 @@ class TimerProvider extends ChangeNotifier {
     int elapsed = _actualSecondsElapsed;
     _actualSecondsElapsed = 0;
     return elapsed;
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 }

@@ -4,22 +4,28 @@ class AppConfirmButton extends StatelessWidget {
   const AppConfirmButton({
     super.key,
     this.text = 'Confirm',
-    required this.onTap
+    this.icon,
+    required this.onTap,
+    this.color
   });
 
   final String text;
   final VoidCallback? onTap;
+  final Widget? icon;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
 
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
+      child: ElevatedButton.icon(
           onPressed: onTap,
-          child: Text(
-            text,
-          )
+          label: Text(text),
+          icon: icon,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color
+        ),
       ),
     );
   }
