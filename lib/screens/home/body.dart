@@ -17,8 +17,8 @@ class HomeBody extends StatelessWidget {
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
-    final controller = HomeController(context);
     final taskProvider = context.watch<TaskProvider>();
+    final controller = HomeController(taskProvider);
 
     Future.microtask(() {
       if (taskProvider.tasks.isEmpty && !taskProvider.isLoading) {
@@ -46,7 +46,7 @@ class HomeBody extends StatelessWidget {
                 style: textTheme.headlineMedium,
               ),
               ElevatedButton.icon(
-                onPressed: () => controller.navigateToCreateTask(AppRoutes.create),
+                onPressed: () => controller.navigateToCreateTask(context, AppRoutes.create),
                 icon: Icon(Icons.add, size: 20.r),
                 label: Text(
                   'Add',
@@ -70,7 +70,7 @@ class HomeBody extends StatelessWidget {
                 return TaskCard(
                   task: task,
                   onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
-                  onTap: () => controller.navigateToTaskDetails(task),
+                  onTap: () => controller.navigateToTaskDetails(context, task),
                 );
               },
             ),
