@@ -190,9 +190,9 @@ class TimerCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return InkWell(
-      onTap: minutes != null ? () => controller.startPresetTimer(minutes) : () {
-        // Logic for Custom Time Picker
-      },
+      onTap: minutes != null
+        ? () => controller.startPresetTimer(minutes)
+        : () => controller.showCustomTimerPicker(),
       borderRadius: BorderRadius.circular(AppTheme.radiusMedium),
       child: Container(
         width: 72.w,

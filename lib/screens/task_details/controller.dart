@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:planbee/widgets/base_picker_layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocks/task/model.dart';
 import '../../blocks/task/provider.dart';
 import '../../blocks/task/repository.dart';
 import '../../blocks/timer/provider.dart';
+import 'components/focus_duration_picker.dart';
 
 class TaskDetailsController {
   final BuildContext context;
@@ -60,7 +62,7 @@ class TaskDetailsController {
     if (timerProvider.activeTaskId == null || timerProvider.activeTaskId != task.id) {
       timerProvider.stopTimer();
       timerProvider.startTimer(25, task.id);
-      _updateStatus(TaskStatus.inProgress); // Встановлюємо "In Progress"
+      _updateStatus(TaskStatus.inProgress);
       return;
     }
 
@@ -96,7 +98,17 @@ class TaskDetailsController {
       timerProvider.stopTimer();
     }
 
-    // Navigator.pop(context);
+  }
+
+  Future<void> showCustomTimerPicker() async {
+    final Duration? pickedDuration = await BasePickerLayout.show<Duration>(
+        context: context,
+        child: FocusDurationPicker()
+    );
+
+    if (pickedDuration != null && pickedDuration.inMinutes > 0) {
+      startPresetTimer(pickedDuration.inMinutes);
+    }
   }
 
   void resetTimer() {
