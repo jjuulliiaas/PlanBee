@@ -138,6 +138,28 @@ class TaskDetailsController {
     );
   }
 
+  Future<void> checkIfMissed() async {
+    final taskProv = context.read<TaskProvider>();
+
+    final freshTask = taskProv.tasks.firstWhere(
+          (t) => t.id == task.id,
+      orElse: () => task,
+    );
+
+    if (freshTask.status == TaskStatus.completed) return;
+
+    final now = DateTime.now();
+    final isExpired = freshTask.deadline.isBefore(now);
+
+    if (isExpired && freshTask.status != TaskStatus.missed) {
+      await _updateStatus(TaskStatus.missed);
+    }
+
+    else if (!isExpired && freshTask.status == TaskStatus.missed) {
+      await _updateStatus(TaskStatus.planned);
+    }
+  }
+
   Future<void> _updateStatus(TaskStatus newStatus) async {
     final taskProvider = context.read<TaskProvider>();
 

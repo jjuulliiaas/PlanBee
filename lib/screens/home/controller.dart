@@ -17,6 +17,15 @@ class HomeController {
     taskProvider.isLoading = true;
     try {
       final allTasks = await _repository.fetchTasks();
+
+      for (var t in allTasks) {
+        if (t.status != TaskStatus.completed &&
+            t.status != TaskStatus.missed &&
+            t.deadline.isBefore(DateTime.now())) {
+          await _repository.updateTaskStatus(t.id, TaskStatus.missed);
+        }
+      }
+
       taskProvider.tasks = allTasks;
     } catch (e) {
     } finally {

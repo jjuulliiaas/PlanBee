@@ -26,6 +26,8 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final timerProvider = context.watch<TimerProvider>();
 
+    final displayStatus = task.effectiveStatus;
+
     final bool isThisTaskActive = timerProvider.isRunning &&
         timerProvider.activeTaskId == task.id;
 
@@ -90,9 +92,11 @@ class TaskCard extends StatelessWidget {
                   InfoColumn(
                     label: 'Deadline',
                     value: getFormattedDate(task.deadline),
-                    colorValue: colorScheme.primary,
+                    colorValue: task.effectiveStatus == TaskStatus.missed
+                        ? colorScheme.error
+                        : colorScheme.primary,
                   ),
-                  StatusBadge(status: task.status),
+                  StatusBadge(status: displayStatus),
                 ],
               ),
 
