@@ -4,12 +4,14 @@ import 'package:planbee/routes.dart';
 import '../../blocks/task/model.dart';
 import '../../blocks/task/provider.dart';
 import '../../blocks/task/repository.dart';
+import '../../blocks/timer/provider.dart';
 
 class HomeController {
   final TaskProvider taskProvider;
   final TaskRepository _repository = TaskRepository();
+  final TimerProvider timerProvider;
 
-  HomeController(this.taskProvider);
+  HomeController(this.taskProvider, this.timerProvider);
 
   Future<void> fetchAllTasks() async {
     taskProvider.isLoading = true;
@@ -24,6 +26,11 @@ class HomeController {
 
   void toggleTaskStatus(TaskModel task, bool? isCompleted) async {
     final newStatus = isCompleted == true ? TaskStatus.completed : TaskStatus.planned;
+
+    if (newStatus == TaskStatus.completed && timerProvider.activeTaskId == task.id) {
+      timerProvider.stopTimer();
+    }
+
     await _repository.updateTaskStatus(task.id, newStatus);
     taskProvider.updateTaskStatusLocally(task.id, newStatus);
   }

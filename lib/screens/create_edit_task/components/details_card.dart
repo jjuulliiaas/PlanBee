@@ -122,7 +122,9 @@ class DetailsCard extends StatelessWidget {
             const Divider(),
             AppSwitcher(
               value: provider.isHighPriority,
-              onChanged: controller.onTogglePriority,
+              onChanged: (val) {
+                controller.onTogglePriority(val);
+              },
             )
           ],
         ),

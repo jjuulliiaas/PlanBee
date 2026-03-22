@@ -34,7 +34,8 @@ class AppRoutes {
         return noAnimationRoute(const HomeScreen());
 
       case create:
-        return noAnimationRoute(const CreateEditScreen());
+        final task = settings.arguments as TaskModel?;
+        return noAnimationRoute(CreateEditScreen(taskToEdit: task));
 
       case statistics:
         return noAnimationRoute(const StatisticsScreen());

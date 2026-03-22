@@ -6,6 +6,7 @@ import '../../blocks/task/model.dart';
 import '../../blocks/task/provider.dart';
 import '../../blocks/task/repository.dart';
 import '../../blocks/timer/provider.dart';
+import '../../routes.dart';
 import 'components/focus_duration_picker.dart';
 
 class TaskDetailsController {
@@ -85,19 +86,12 @@ class TaskDetailsController {
     final timerProvider = context.read<TimerProvider>();
     final taskProvider = context.read<TaskProvider>();
 
-    int elapsed = 0;
-    if (timerProvider.activeTaskId == task.id) {
-      elapsed = timerProvider.getAndResetElapsed();
-    }
-
-    await TaskRepository().updateTaskStatus(task.id, TaskStatus.completed);
-
-    taskProvider.updateTaskStatusLocally(task.id, TaskStatus.completed);
-
     if (timerProvider.activeTaskId == task.id) {
       timerProvider.stopTimer();
     }
 
+    await TaskRepository().updateTaskStatus(task.id, TaskStatus.completed);
+    taskProvider.updateTaskStatusLocally(task.id, TaskStatus.completed);
   }
 
   Future<void> showCustomTimerPicker() async {
@@ -128,12 +122,20 @@ class TaskDetailsController {
     final bool currentlyCompleted = getIsTaskCompletedRead();
     final newStatus = currentlyCompleted ? TaskStatus.planned : TaskStatus.completed;
 
-    await TaskRepository().updateTaskStatus(task.id, newStatus);
-    taskProvider.updateTaskStatusLocally(task.id, newStatus);
-
     if (newStatus == TaskStatus.completed && timerProvider.activeTaskId == task.id) {
       timerProvider.stopTimer();
     }
+
+    await TaskRepository().updateTaskStatus(task.id, newStatus);
+    taskProvider.updateTaskStatusLocally(task.id, newStatus);
+  }
+
+  void navigateToEditTask(BuildContext context, TaskModel task) {
+    Navigator.pushNamed(
+      context,
+      AppRoutes.create,
+      arguments: task,
+    );
   }
 
   Future<void> _updateStatus(TaskStatus newStatus) async {

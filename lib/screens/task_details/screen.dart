@@ -36,7 +36,7 @@ class TaskDetailsScreen extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () => controller.navigateToEditTask(context, task),
               child: Text(
                 'Edit',
                 style: TextStyle(

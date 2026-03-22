@@ -122,4 +122,20 @@ class DatabaseService {
     await db.delete('tasks', where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<void> updateTask(TaskModel task) async {
+    final db = await instance.database;
+
+    if (task.category != null) {
+      await insertCategory(task.category!);
+    }
+
+    await db.update(
+      'tasks',
+      task.toMap(),
+      where: 'id = ?',
+      whereArgs: [task.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
 }

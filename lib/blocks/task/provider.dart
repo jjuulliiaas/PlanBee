@@ -111,4 +111,24 @@ class TaskProvider extends ChangeNotifier{
       notifyListeners();
     }
   }
+
+  void updateTaskInList(TaskModel updatedTask) {
+    final index = _tasks.indexWhere((t) => t.id == updatedTask.id);
+    if (index != -1) {
+      _tasks[index] = updatedTask;
+      _tasks.sort((a, b) => a.deadline.compareTo(b.deadline));
+      notifyListeners();
+    }
+  }
+
+  void loadTaskData(TaskModel task) {
+    _title = task.title;
+    _description = task.description ?? '';
+    _selectedDate = task.deadline;
+    _selectedTime = TimeOfDay.fromDateTime(task.deadline);
+    _selectedCategory = task.category;
+    _isHighPriority = task.isHighPriority;
+
+    notifyListeners();
+  }
 }

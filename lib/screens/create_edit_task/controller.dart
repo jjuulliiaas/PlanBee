@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../blocks/task/model.dart';
 import '../../blocks/task/repository.dart';
+import '../../routes.dart';
 import 'components/pickers/create_new_category_picker.dart';
 import 'components/pickers/time_picker.dart';
 
@@ -23,15 +24,13 @@ class CreateEditController {
     required this.categoryProvider
   });
 
-  Future<void> onSaveTask(BuildContext context) async {
+  Future<void> onSaveTask(BuildContext context, {String? editTaskId}) async {
     if (taskProvider.title.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter a task title')),
       );
       return;
     }
-
-    taskProvider.isLoading = true;
 
     final deadline = taskProvider.fullDeadline;
     if (deadline == null) {
@@ -41,27 +40,55 @@ class CreateEditController {
       return;
     }
 
+    taskProvider.isLoading = true;
+
     try {
-      final newTask = TaskModel(
-        id: const Uuid().v4(),
-        title: taskProvider.title,
-        description: taskProvider.description,
-        category: taskProvider.selectedCategory,
-        createdAt: DateTime.now(),
-        deadline: deadline,
-        isHighPriority: taskProvider.isHighPriority,
-        status: TaskStatus.planned
-      );
+      final provider = taskProvider;
 
-      await _repository.saveTask(newTask);
+      TaskModel task;
 
-      taskProvider.addTask(newTask);
+      if (editTaskId != null) {
+        final existingTask = provider.tasks.firstWhere((t) => t.id == editTaskId);
 
-      taskProvider.reset();
+        task = TaskModel(
+          id: editTaskId,
+          title: provider.title,
+          description: provider.description,
+          category: provider.selectedCategory,
+          createdAt: existingTask.createdAt,
+          deadline: deadline,
+          isHighPriority: provider.isHighPriority,
+          status: existingTask.status,
+        );
+
+        await _repository.updateTask(task);
+        provider.updateTaskInList(task);
+      } else {
+        task = TaskModel(
+          id: const Uuid().v4(),
+          title: provider.title,
+          description: provider.description,
+          category: provider.selectedCategory,
+          createdAt: DateTime.now(),
+          deadline: deadline,
+          isHighPriority: provider.isHighPriority,
+          status: TaskStatus.planned,
+        );
+
+        await _repository.saveTask(task);
+        provider.addTask(task);
+      }
+
+      provider.reset();
       if (context.mounted) Navigator.pop(context);
 
     } catch (e) {
-      print('Error saving task: $e');
+      debugPrint('Error saving task: $e');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to save task')),
+        );
+      }
     } finally {
       taskProvider.isLoading = false;
     }

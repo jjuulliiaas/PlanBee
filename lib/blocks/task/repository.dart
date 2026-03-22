@@ -20,4 +20,8 @@ class TaskRepository {
     await _dbService.deleteTask(id);
   }
 
+  Future<void> updateTask(TaskModel task) async {
+    await _dbService.updateTask(task);
+  }
+
 }

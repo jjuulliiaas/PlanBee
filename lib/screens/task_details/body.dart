@@ -136,13 +136,6 @@ class TaskDetailsBody extends StatelessWidget {
               ),
             ),
             TimerCard(controller: controller,),
-            // SizedBox(height: 70.h,),
-            // AppConfirmButton(
-            //   onTap: controller.toggleTaskStatus,
-            //   text: isCompleted ? 'Task Completed' : 'Mark as completed',
-            //   icon: Icon(Icons.done),
-            //   color: isCompleted ? customColors?.success : colorScheme.primary,
-            // )
           ],
         ),
       ),

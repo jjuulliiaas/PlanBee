@@ -4,6 +4,8 @@ import 'package:planbee/blocks/task/provider.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 import 'package:provider/provider.dart';
 
+import '../../blocks/task/model.dart';
+import '../../blocks/timer/provider.dart';
 import '../../routes.dart';
 import 'components/task_card/task_card.dart';
 import 'controller.dart';
@@ -18,7 +20,8 @@ class HomeBody extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final taskProvider = context.watch<TaskProvider>();
-    final controller = HomeController(taskProvider);
+    final timerProvider = context.read<TimerProvider>();
+    final controller = HomeController(taskProvider, timerProvider);
 
     Future.microtask(() {
       if (taskProvider.tasks.isEmpty && !taskProvider.isLoading) {
@@ -67,10 +70,13 @@ class HomeBody extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final task = todayTasks[index];
-                return TaskCard(
-                  task: task,
-                  onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
-                  onTap: () => controller.navigateToTaskDetails(context, task),
+                return Opacity(
+                    opacity: task.status == TaskStatus.completed ? 0.5 : 1.0,
+                  child: TaskCard(
+                    task: task,
+                    onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
+                    onTap: () => controller.navigateToTaskDetails(context, task),
+                  ),
                 );
               },
             ),

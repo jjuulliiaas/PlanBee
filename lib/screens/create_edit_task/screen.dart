@@ -25,9 +25,11 @@ class CreateEditScreen extends StatelessWidget {
         categoryProvider: categoryProvider
     );
 
+    final isEditing = taskToEdit != null;
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('New Task'),
+          title: Text(isEditing ? 'Edit Task' : 'New Task'),
           titleTextStyle: textScheme.headlineSmall,
           leading: TextButton(
               onPressed: () {
@@ -38,16 +40,17 @@ class CreateEditScreen extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: provider.canSave && !provider.isLoading
-                  ? () => controller.onSaveTask(context)
+                  ? () => controller.onSaveTask(
+                      context,
+                      editTaskId: taskToEdit?.id,
+                    )
                   : null,
               child: Text(
-                'Save',
+                isEditing ? 'Update' : 'Save',
                 style: TextStyle(
-                  color: provider.canSave
-                      ? theme.colorScheme.primary
-                      : theme.colorScheme.secondary,
-                    ),
-                  ),
+                  color: provider.canSave ? theme.colorScheme.primary : theme.colorScheme.secondary,
+                ),
+              ),
                 ),
               ],
             ),
@@ -55,7 +58,7 @@ class CreateEditScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: AppPadding.screen(context),
-                    child: CreateEditBody(),
+                    child: CreateEditBody(taskToEdit: taskToEdit,),
                   ),
                 ]
             )
