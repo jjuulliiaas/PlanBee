@@ -131,4 +131,17 @@ class TaskProvider extends ChangeNotifier{
 
     notifyListeners();
   }
+
+  List<TaskModel> getTasksByDay(DateTime day) {
+    return _tasks.where((t) =>
+    t.deadline.year == day.year &&
+        t.deadline.month == day.month &&
+        t.deadline.day == day.day
+    ).toList();
+  }
+
+  void deleteTaskLocally(String id) {
+    _tasks.removeWhere((t) => t.id == id);
+    notifyListeners();
+  }
 }

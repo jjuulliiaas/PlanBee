@@ -72,6 +72,8 @@ class TaskModel {
   TaskStatus get effectiveStatus {
     if (status == TaskStatus.completed) return TaskStatus.completed;
 
+    if (status == TaskStatus.inProgress) return TaskStatus.inProgress;
+
     if (deadline.isBefore(DateTime.now())) {
       return TaskStatus.missed;
     }

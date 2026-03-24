@@ -50,7 +50,7 @@ class DetailsCard extends StatelessWidget {
                       )
                     else
                       PickedChip(
-                        label: DateHelper.formatDeadlineDate(provider.selectedDate!),
+                        label: DateHelper.formatFullDate(provider.selectedDate!),
                         onTap: () => controller.onSelectDate(context),
                       ),
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/utils/app_padding.dart';
@@ -6,13 +7,14 @@ import 'package:planbee/widgets/status_badge.dart';
 import 'package:provider/provider.dart';
 import '../../../../blocks/task/model.dart';
 import '../../../../blocks/timer/provider.dart';
+import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/formatted_date.dart';
 import 'check_box.dart';
 import 'info_column.dart';
 
 class TaskCard extends StatelessWidget {
   final TaskModel task;
-  final ValueChanged<bool?> onStatusChanged;
+  final ValueChanged<bool> onStatusChanged;
   final VoidCallback onTap;
 
   const TaskCard({
@@ -39,6 +41,9 @@ class TaskCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.h),
       child: InkWell(
         onTap: onTap,
+        splashColor: colorScheme.primaryContainer,
+        highlightColor: colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
         child: Container(
           padding: AppPadding.screen(context),
           child: Column(
@@ -73,7 +78,7 @@ class TaskCard extends StatelessWidget {
 
                   CustomCheckbox(
                     isChecked: task.status == TaskStatus.completed,
-                    onChanged: onStatusChanged,
+                    onChanged: (val) => onStatusChanged(val),
                   ),
                 ],
               ),
@@ -105,7 +110,7 @@ class TaskCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      Icons.timer_outlined,
+                      CupertinoIcons.timer_fill,
                       color: colorScheme.outline,
                       size: 15.r,
                     ),

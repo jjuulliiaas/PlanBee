@@ -16,7 +16,7 @@ class CustomBottomBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, AppRoutes.home);
         break;
       case 1:
-        // Navigator.pushReplacementNamed(context, AppRoutes.create);
+        Navigator.pushReplacementNamed(context, AppRoutes.allTasks);
         break;
       case 2:
         Navigator.pushReplacementNamed(context, AppRoutes.statistics);
@@ -53,7 +53,7 @@ class CustomBottomBar extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildItem(context, index: 0, icon: Icons.home_rounded),
-            _buildItem(context, index: 1, icon: Icons.add),
+            _buildItem(context, index: 1, icon: Icons.checklist_rounded),
             _buildItem(context, index: 2, icon: Icons.bar_chart),
             _buildItem(context, index: 3, icon: Icons.settings)
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planbee/screens/all_tasks/screen.dart';
 import 'package:planbee/screens/create_edit_task/screen.dart';
 import 'package:planbee/screens/home/screen.dart';
 import 'package:planbee/screens/settings/screen.dart';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const statistics = '/statistics';
   static const settingsScreen = '/settings';
   static const taskDetails = '/taskDetails';
+  static const allTasks = '/allTasks';
 
   static Route<dynamic> noAnimationRoute(Widget page) {
     return PageRouteBuilder(
@@ -48,6 +50,9 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => TaskDetailsScreen(task: task),
         );
+
+      case allTasks:
+        return noAnimationRoute(const AllTasksScreen());
 
       default:
         return noAnimationRoute(const HomeScreen());

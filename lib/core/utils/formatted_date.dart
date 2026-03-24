@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
-class DateHelper{
-  static String formatDeadlineDate(DateTime date) {
+class DateHelper {
+  static String formatShortMonthDay(DateTime date) {
     return DateFormat('MMM, d').format(date);
   }
 
@@ -18,6 +18,7 @@ String getFormattedDate(DateTime date) {
   final dateToCheck = DateTime(date.year, date.month, date.day);
 
   String dayText;
+
   if (dateToCheck == today) {
     dayText = 'Today';
   } else if (dateToCheck == tomorrow) {
@@ -25,8 +26,10 @@ String getFormattedDate(DateTime date) {
   } else if (dateToCheck == yesterday) {
     dayText = 'Yesterday';
   } else {
-    dayText = '${date.day}.${date.month}';
+    dayText = DateHelper.formatShortMonthDay(date);
   }
 
-  return '$dayText, ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+  final timeText = '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+
+  return '$dayText, $timeText';
 }
