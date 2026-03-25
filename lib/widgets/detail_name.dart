@@ -27,8 +27,9 @@ class DetailName extends StatelessWidget {
     final textColor = forceWhite ? colorScheme.surface : colorScheme.onSecondaryContainer;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: alignment,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
@@ -36,10 +37,12 @@ class DetailName extends StatelessWidget {
           color: iconColor,
         ),
         SizedBox(width: 8.w,),
-        Text(
-          text,
-          style: textTheme.bodyLarge?.copyWith(
-            color: textColor
+        Flexible(
+          fit: FlexFit.loose,
+          child: Text(
+            text,
+            style: textTheme.bodyLarge?.copyWith(color: textColor),
+            softWrap: true,
           ),
         ),
       ],

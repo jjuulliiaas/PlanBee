@@ -24,7 +24,15 @@ class PickedChip extends StatelessWidget {
           children: [
             if (icon != null) Icon(icon, size: 15.sp, color: theme.colorScheme.primary),
             if (icon != null) SizedBox(width: 4.w),
-            Text(label, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary)),
+            Flexible(
+              child: Text(
+                label,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
+                softWrap: true,
+              ),
+            ),
           ],
         ),
       ),

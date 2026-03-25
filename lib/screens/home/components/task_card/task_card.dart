@@ -57,6 +57,7 @@ class TaskCard extends StatelessWidget {
                       size: 20.r,
                       color: colorScheme.primary
                   ),
+                  SizedBox(width: 8.w),
                   Expanded(
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -87,20 +88,28 @@ class TaskCard extends StatelessWidget {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InfoColumn(
-                    label: 'Category',
-                    value: task.category?.name ?? 'General',
-                    colorValue: colorScheme.primary,
+                  Expanded(
+                    flex: 3,
+                    child: InfoColumn(
+                      label: 'Category',
+                      value: task.category?.name ?? 'General',
+                      colorValue: colorScheme.primary,
+                    ),
                   ),
-                  InfoColumn(
-                    label: 'Deadline',
-                    value: getFormattedDate(task.deadline),
-                    colorValue: task.effectiveStatus == TaskStatus.missed
-                        ? colorScheme.error
-                        : colorScheme.primary,
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    flex: 3,
+                    child: InfoColumn(
+                      label: 'Deadline',
+                      value: getFormattedDate(task.deadline),
+                      colorValue: task.effectiveStatus == TaskStatus.missed
+                          ? colorScheme.error
+                          : colorScheme.primary,
+                    ),
                   ),
+                  SizedBox(width: 8.w),
                   StatusBadge(status: displayStatus),
                 ],
               ),

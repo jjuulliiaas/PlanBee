@@ -26,6 +26,8 @@ class DetailsCard extends StatelessWidget {
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
+    final widthSpacer = SizedBox(width: 12.w,);
+
     return Card(
       elevation: 10,
       child: Container(
@@ -40,42 +42,45 @@ class DetailsCard extends StatelessWidget {
                   icon: Icons.calendar_month,
                   text: 'Deadline',
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if(provider.selectedDate == null)
-                      OutlinedButton(
-                          onPressed: () => controller.onSelectDate(context),
-                          child: const Text('Set Date')
-                      )
-                    else
-                      PickedChip(
-                        label: DateHelper.formatFullDate(provider.selectedDate!),
-                        onTap: () => controller.onSelectDate(context),
-                      ),
+                widthSpacer,
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (provider.selectedDate == null)
+                        OutlinedButton(
+                            onPressed: () => controller.onSelectDate(context),
+                            child: const Text('Set Date'))
+                      else
+                        Flexible(
+                          child: PickedChip(
+                            label: DateHelper.formatShortMonthDay(provider.selectedDate!),
+                            onTap: () => controller.onSelectDate(context),
+                          ),
+                        ),
 
-                    SizedBox(width: 8.w),
+                      SizedBox(width: 4.w),
 
-                    if(provider.selectedTime == null)
-                      OutlinedButton(
-                          onPressed: () => controller.onSelectTime(context),
-                          child: const Text('Set Time')
-                      )
-                    else
-                      PickedChip(
-                        label: provider.selectedTime!.format(context),
-                        onTap: () => controller.onSelectDate(context),
-                      ),
+                      if (provider.selectedTime == null)
+                        OutlinedButton(
+                            onPressed: () => controller.onSelectTime(context),
+                            child: const Text('Set Time'))
+                      else
+                        Flexible(
+                          child: PickedChip(
+                            label: provider.selectedTime!.format(context),
+                            onTap: () => controller.onSelectDate(context),
+                          ),
+                        ),
 
-                    if (provider.selectedDate != null || provider.selectedTime != null)
-                      _ResetIcon(
-                        onTap: () {
+                      if (provider.selectedDate != null || provider.selectedTime != null)
+                        _ResetIcon(onTap: () {
                           provider.selectedDate = null;
                           provider.selectedTime = null;
-                        },
-                      ),
-                  ],
-                )
+                        }),
+                    ],
+                  ),
+                ),
               ],
             ),
 
@@ -88,35 +93,37 @@ class DetailsCard extends StatelessWidget {
                   icon: Icons.category_rounded,
                   text: 'Category',
                 ),
-                if(provider.selectedCategory == null)
-                TextButton.icon(
-                    onPressed: () => controller.onSelectCategory(context),
-                    label: Row(
-                      children: [
-                        Text(
-                          provider.selectedCategory?.name ?? 'Choose category',
-                          style: textTheme.bodyMedium?.copyWith(color: colorScheme.primary),
-                        ),
-                        Icon(
-                            Icons.keyboard_arrow_down_outlined,
-                          color: colorScheme.primary,
-                        )
-                      ],
-                    ),
-                )
-                else
-                  Row(
+                widthSpacer,
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      PickedChip(
-                        icon: provider.selectedCategory!.icon,
-                        label: provider.selectedCategory!.name,
-                        onTap: () => controller.onSelectCategory(context),
-                      ),
-                      _ResetIcon(
-                        onTap: () => provider.selectedCategory = null,
-                      ),
+                      if (provider.selectedCategory == null)
+                        TextButton.icon(
+                          onPressed: () => controller.onSelectCategory(context),
+                          label: Row(
+                            children: [
+                              Text(
+                                'Choose category',
+                                style: textTheme.bodyMedium?.copyWith(color: colorScheme.primary),
+                              ),
+                              Icon(Icons.keyboard_arrow_down_outlined, color: colorScheme.primary)
+                            ],
+                          ),
+                        )
+                      else
+                        Flexible(
+                          child: PickedChip(
+                            icon: provider.selectedCategory!.icon,
+                            label: provider.selectedCategory!.name,
+                            onTap: () => controller.onSelectCategory(context),
+                          ),
+                        ),
+                      if (provider.selectedCategory != null)
+                        _ResetIcon(onTap: () => provider.selectedCategory = null),
                     ],
                   ),
+                ),
               ],
             ),
             const Divider(),

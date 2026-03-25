@@ -36,54 +36,58 @@ class HomeBody extends StatelessWidget {
           task.deadline.day == now.day;
     }).toList();
 
-    return Padding(
-      padding: AppPadding.horizontalOnly(context),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+        child: Padding(
+          padding: AppPadding.screen(context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'Today\'s plan',
-                style: textTheme.headlineMedium,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '🐝 Today\'s plan',
+                    style: textTheme.headlineSmall,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => controller.navigateToCreateTask(context, AppRoutes.create),
+                    icon: Icon(Icons.add, size: 20.r),
+                    label: Text(
+                      'Add',
+                      style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
+                    ),
+                  )
+                ],
               ),
-              ElevatedButton.icon(
-                onPressed: () => controller.navigateToCreateTask(context, AppRoutes.create),
-                icon: Icon(Icons.add, size: 20.r),
-                label: Text(
-                  'Add',
-                  style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
+              SizedBox(height: 24.h),
+              Expanded(
+                child: taskProvider.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : todayTasks.isEmpty
+                    ? _buildEmptyState(textTheme)
+                    : ListView.builder(
+                  padding: EdgeInsets.only(bottom: 100.h),
+                  itemCount: todayTasks.length,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final task = todayTasks[index];
+                    return Opacity(
+                      opacity: task.status == TaskStatus.completed ? 0.5 : 1.0,
+                      child: TaskCard(
+                        task: task,
+                        onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
+                        onTap: () => controller.navigateToTaskDetails(context, task),
+                      ),
+                    );
+                  },
                 ),
-              )
+              ),
             ],
           ),
-          SizedBox(height: 24.h),
-          Expanded(
-            child: taskProvider.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : todayTasks.isEmpty
-                ? _buildEmptyState(textTheme)
-                : ListView.builder(
-              padding: EdgeInsets.only(bottom: 100.h),
-              itemCount: todayTasks.length,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final task = todayTasks[index];
-                return Opacity(
-                    opacity: task.status == TaskStatus.completed ? 0.5 : 1.0,
-                  child: TaskCard(
-                    task: task,
-                    onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
-                    onTap: () => controller.navigateToTaskDetails(context, task),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+        )
     );
+
+
   }
 
   Widget _buildEmptyState(TextTheme textTheme) {

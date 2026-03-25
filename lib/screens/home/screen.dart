@@ -12,15 +12,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textScheme = theme.textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('🐝 PlanBee'),
-        titleTextStyle: textScheme.headlineSmall?.copyWith(color: colorScheme.outline),
-        ),
       body: Stack(
         children: [
           HomeBody(),

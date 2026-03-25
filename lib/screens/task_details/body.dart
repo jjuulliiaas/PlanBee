@@ -94,18 +94,22 @@ class TaskDetailsBody extends StatelessWidget {
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const PropertyName(title: 'Category'),
-                            heightSpacer,
-                            PickedChip(
-                              label: currentTask.category?.name ?? 'General',
-                              onTap: () {},
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const PropertyName(title: 'Category'),
+                              heightSpacer,
+                              PickedChip(
+                                label: currentTask.category?.name ?? 'General',
+                                onTap: () {},
+                              ),
+                            ],
+                          ),
                         ),
+                        widthSpacer,
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
