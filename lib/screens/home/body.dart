@@ -4,10 +4,12 @@ import 'package:planbee/blocks/task/provider.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 import 'package:provider/provider.dart';
 
+import '../../blocks/statistics/provider.dart';
 import '../../blocks/task/model.dart';
 import '../../blocks/timer/provider.dart';
 import '../../routes.dart';
 import 'components/task_card/task_card.dart';
+import 'components/yesterday_motivation.dart';
 import 'controller.dart';
 
 class HomeBody extends StatelessWidget {
@@ -21,7 +23,8 @@ class HomeBody extends StatelessWidget {
 
     final taskProvider = context.watch<TaskProvider>();
     final timerProvider = context.read<TimerProvider>();
-    final controller = HomeController(taskProvider, timerProvider);
+    final statsProvider = context.watch<StatsProvider>();
+    final controller = HomeController(taskProvider, timerProvider, statsProvider);
 
     Future.microtask(() {
       if (taskProvider.tasks.isEmpty && !taskProvider.isLoading) {
@@ -37,63 +40,63 @@ class HomeBody extends StatelessWidget {
     }).toList();
 
     return SafeArea(
-        child: Padding(
-          padding: AppPadding.screen(context),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+      child: taskProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: AppPadding.screen(context).copyWith(bottom: 100.h),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '🐝 Today\'s plan',
-                    style: textTheme.headlineSmall,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () => controller.navigateToCreateTask(context, AppRoutes.create),
-                    icon: Icon(Icons.add, size: 20.r),
-                    label: Text(
-                      'Add',
-                      style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
-                    ),
-                  )
-                ],
+              Text(
+                'Today\'s plan',
+                style: textTheme.headlineSmall,
               ),
-              SizedBox(height: 24.h),
-              Expanded(
-                child: taskProvider.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : todayTasks.isEmpty
-                    ? _buildEmptyState(textTheme)
-                    : ListView.builder(
-                  padding: EdgeInsets.only(bottom: 100.h),
-                  itemCount: todayTasks.length,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final task = todayTasks[index];
-                    return Opacity(
-                      opacity: task.status == TaskStatus.completed ? 0.5 : 1.0,
-                      child: TaskCard(
-                        task: task,
-                        onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
-                        onTap: () => controller.navigateToTaskDetails(context, task),
-                      ),
-                    );
-                  },
+              ElevatedButton.icon(
+                onPressed: () => controller.navigateToCreateTask(context, AppRoutes.create),
+                icon: Icon(Icons.add, size: 20.r),
+                label: Text(
+                  'Add',
+                  style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
                 ),
-              ),
+              )
             ],
           ),
-        )
+          SizedBox(height: 16.h),
+
+          if (!statsProvider.isMotivationHidden)
+            YesterdayMotivationWidget(
+              onClose: () => controller.hideYesterdayMotivation(),
+            ),
+
+          SizedBox(height: 8.h),
+
+          if (todayTasks.isEmpty)
+            _buildEmptyState(textTheme)
+          else
+            ...todayTasks.map((task) {
+              return Padding(
+                padding: EdgeInsets.only(bottom: 2.h),
+                child: Opacity(
+                  opacity: task.status == TaskStatus.completed ? 0.5 : 1.0,
+                  child: TaskCard(
+                    task: task,
+                    onStatusChanged: (val) => controller.toggleTaskStatus(task, val),
+                    onTap: () => controller.navigateToTaskDetails(context, task),
+                  ),
+                ),
+              );
+            }),
+        ],
+      ),
     );
-
-
   }
 
   Widget _buildEmptyState(TextTheme textTheme) {
-    return Center(
+    return Padding(
+      padding: EdgeInsets.only(top: 100.h),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.wb_sunny_outlined, size: 50.r, color: Colors.grey),
           SizedBox(height: 10.h),

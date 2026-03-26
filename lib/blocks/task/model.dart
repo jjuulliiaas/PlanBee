@@ -81,4 +81,6 @@ class TaskModel {
     return status;
   }
 
+  bool get isCompleted => status == TaskStatus.completed;
+
 }

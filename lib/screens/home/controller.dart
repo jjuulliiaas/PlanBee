@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planbee/routes.dart';
 
+import '../../blocks/statistics/provider.dart';
 import '../../blocks/task/model.dart';
 import '../../blocks/task/provider.dart';
 import '../../blocks/task/repository.dart';
@@ -10,8 +11,9 @@ class HomeController {
   final TaskProvider taskProvider;
   final TaskRepository _repository = TaskRepository();
   final TimerProvider timerProvider;
+  final StatsProvider? statsProvider;
 
-  HomeController(this.taskProvider, this.timerProvider);
+  HomeController(this.taskProvider, this.timerProvider, this.statsProvider);
 
   Future<void> fetchAllTasks() async {
     taskProvider.isLoading = true;
@@ -54,5 +56,9 @@ class HomeController {
       AppRoutes.taskDetails,
       arguments: task,
     );
+  }
+
+  void hideYesterdayMotivation() {
+    statsProvider?.hideMotivation();
   }
 }

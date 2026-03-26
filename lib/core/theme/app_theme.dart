@@ -35,6 +35,7 @@ class AppTheme {
   static double get radiusSmall => 10.0.r;
   static double get radiusMedium => 12.0.r;
   static double get radiusLarge => 16.0.r;
+  static double get radiusBig => 24.0.r;
 
 
   /// Color Scheme
