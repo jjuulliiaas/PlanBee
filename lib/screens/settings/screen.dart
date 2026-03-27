@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:planbee/screens/home/body.dart';
 import 'package:planbee/widgets/bottom_bar.dart';
+
+import 'body.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -17,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
       ),
         body: Stack(
             children: [
-              HomeBody(),
+              const SettingsBody(),
               const CustomBottomBar(currentIndex: 3)
             ]
         )

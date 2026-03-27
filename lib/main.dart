@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/blocks/all_tasks/provider.dart';
+import 'package:planbee/blocks/settings/provider.dart';
 import 'package:planbee/blocks/statistics/provider.dart';
 import 'package:planbee/core/theme/app_theme.dart';
 import 'package:planbee/routes.dart';
@@ -24,6 +25,7 @@ class PlanBee extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => CategoryProvider()),
           ChangeNotifierProvider(create: (_) => TaskProvider()),
           ChangeNotifierProvider(create: (_) => TimerProvider()),
+          ChangeNotifierProvider(create: (_) => SettingsProvider()),
           ChangeNotifierProvider(
             create: (context) => AllTasksProvider(
               context.read<TaskProvider>(),
