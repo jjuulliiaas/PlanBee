@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/theme/app_theme.dart';
 import 'package:planbee/core/utils/app_padding.dart';
+import '../../../generated/l10n.dart';
 import '../controller.dart';
 
 class TimerCard extends StatelessWidget {
@@ -14,6 +15,8 @@ class TimerCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    final $ = S.of(context);
 
     final bool isTaskCompleted = controller.isTaskCompleted;
 
@@ -36,17 +39,17 @@ class TimerCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Focus Timer', style: textTheme.bodyLarge),
+                    Text($.focusTimer, style: textTheme.bodyLarge),
                     if (!isTaskCompleted && (isRunning || isPaused))
                       _buildSmallActionButton(
                         context,
-                        label: 'Stop',
+                        label: $.stopFocus,
                         onTap: () => controller.resetTimer(),
                       ),
                     if (!isTaskCompleted && isFinished)
                       _buildSmallActionButton(
                         context,
-                        label: 'Add 5 min',
+                        label: $.add5Min,
                         onTap: () => controller.startPresetTimer(5),
                       ),
                   ],
@@ -78,7 +81,7 @@ class TimerCard extends StatelessWidget {
                 if (isFinished && !isTaskCompleted) ...[
                   SizedBox(height: 12.h),
                   Text(
-                    "Time's up. Great focus session!",
+                    $.timeUpGreatFocus,
                     style: textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
                   ),
                 ],
@@ -86,10 +89,10 @@ class TimerCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildPresetButton(context, label: '15\nmin', minutes: 15),
-                    _buildPresetButton(context, label: '30\nmin', minutes: 30),
-                    _buildPresetButton(context, label: '45\nmin', minutes: 45),
-                    _buildPresetButton(context, label: 'Custom', icon: Icons.edit),
+                    _buildPresetButton(context, minutes: 15),
+                    _buildPresetButton(context, minutes: 30),
+                    _buildPresetButton(context, minutes: 45),
+                    _buildPresetButton(context, icon: Icons.edit),
                   ],
                 )
               ],
@@ -149,21 +152,22 @@ class TimerCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+    final $ = S.of(context);
 
-    String label = 'Start Focus';
+    String label = $.startFocus;
     IconData? icon = Icons.play_arrow;
 
     if (isTaskCompleted) {
-      label = 'Completed';
+      label = $.completed;
       icon = Icons.check;
     } else if (isFinished) {
-      label = 'Done';
+      label = $.done;
       icon = null;
     } else if (isRunning) {
-      label = 'Pause Focus';
+      label = $.pauseFocus;
       icon = Icons.pause;
     } else if (isPaused) {
-      label = 'Resume Focus';
+      label = $.resumeTimer;
       icon = Icons.play_arrow;
     }
 
@@ -183,37 +187,59 @@ class TimerCard extends StatelessWidget {
   }
 
   Widget _buildPresetButton(BuildContext context, {
-    required String label,
     int? minutes,
-    IconData? icon}) {
-
+    String? label,
+    IconData? icon,
+  }) {
+    final l10n = S.of(context);
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final $ = S.of(context);
 
     return InkWell(
       onTap: minutes != null
-        ? () => controller.startPresetTimer(minutes)
-        : () => controller.showCustomTimerPicker(),
+          ? () => controller.startPresetTimer(minutes)
+          : () => controller.showCustomTimerPicker(),
       borderRadius: BorderRadius.circular(AppTheme.radiusMedium),
       child: Container(
         width: 72.w,
-        padding: EdgeInsets.symmetric(vertical: 12.h),
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         decoration: BoxDecoration(
           color: colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (icon != null) Icon(icon, size: 10.r, color: colorScheme.primary),
-            if (icon != null) SizedBox(height: 4.h),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
-                height: 1.1,
+            if (minutes != null) ...[
+              Text(
+                '$minutes',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.sp,
+                ),
               ),
-            ),
+              Text(
+                l10n.minutesUnit,
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.primary,
+                ),
+              ),
+            ] else ...[
+              if (icon != null) ...[
+                Icon(icon, size: 14.sp, color: colorScheme.primary),
+                SizedBox(height: 2.h),
+              ],
+              Text(
+                $.custom,
+                textAlign: TextAlign.center,
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.primary,
+                ),
+              ),
+            ],
           ],
         ),
       ),

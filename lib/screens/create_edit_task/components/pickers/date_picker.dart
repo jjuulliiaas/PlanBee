@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/widgets/app_confirm_button.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../../../widgets/app_calendar.dart';
 import '../../../../widgets/app_choice_chip.dart';
 import '../../../../widgets/base_picker_layout.dart';
@@ -39,21 +40,23 @@ class _DatePickerState extends State<DatePicker> {
     final today = DateTime(now.year, now.month, now.day);
     final tomorrow = today.add(const Duration(days: 1));
 
+    final $ = S.of(context);
+
     final heightSpace = SizedBox(height: 16.h,);
 
     return BasePickerLayout(
-      title: 'Set Date',
+      title: $.setDate,
       children: [
         Row(
           children: [
             AppChoiceChip(
-              label: 'Today',
+              label: $.today,
               isSelected: _selectedDate != null && DateUtils.isSameDay(_selectedDate!, today),
               onSelected: () => _onDateChanged(today),
             ),
             SizedBox(width: 16.w,),
             AppChoiceChip(
-              label: 'Tomorrow',
+              label: $.tomorrow,
             isSelected: _selectedDate != null && DateUtils.isSameDay(_selectedDate!, tomorrow),
               onSelected: () => _onDateChanged(tomorrow),
             )

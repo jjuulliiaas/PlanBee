@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planbee/widgets/base_picker_layout.dart';
 
 import '../../../../blocks/category/model.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../widgets/app_confirm_button.dart';
 import 'icon_picker.dart';
 
@@ -20,12 +21,13 @@ class _CreateNewCategoryPickerState extends State<CreateNewCategoryPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final $ = S.of(context);
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
     return BasePickerLayout(
-        title: 'Create New Category',
+        title: $.createNewCategory,
         children: [
           Form(
             key: _key,
@@ -36,8 +38,8 @@ class _CreateNewCategoryPickerState extends State<CreateNewCategoryPicker> {
               style: textTheme.bodyLarge,
               maxLines: 1,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                  hintText: 'Category title'
+              decoration: InputDecoration(
+                  hintText: $.categoryTitle
               ),
             ),
           ),

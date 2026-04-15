@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../blocks/all_tasks/provider.dart';
 import '../../core/theme/app_theme.dart';
+import '../../generated/l10n.dart';
 import 'components/browser_tab_indicator.dart';
 import 'components/filters.dart';
 import 'components/pages/calendar_page.dart';
@@ -19,6 +20,7 @@ class AllTasksBody extends StatelessWidget {
     final allTasksProvider = context.watch<AllTasksProvider>();
     final controller = AllTasksController(context);
     final theme = Theme.of(context);
+    final $ = S.of(context);
 
     return DefaultTabController(
       length: 2,
@@ -34,7 +36,7 @@ class AllTasksBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'All Tasks',
+                          $.allTasks,
                         style: theme.textTheme.headlineSmall
                       ),
 
@@ -76,8 +78,8 @@ class AllTasksBody extends StatelessWidget {
                       labelStyle: theme.textTheme.bodyMedium,
 
                       tabs: [
-                        _buildTab(context, 'List'),
-                        _buildTab(context, 'Calendar'),
+                        _buildTab(context, $.list),
+                        _buildTab(context, $.calendar),
                       ],
                     ),
                   ),

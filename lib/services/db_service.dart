@@ -138,4 +138,12 @@ class DatabaseService {
     );
   }
 
+  Future<void> deleteAllData() async {
+    final db = await instance.database;
+    await db.transaction((txn) async {
+      await txn.delete('tasks');
+      await txn.delete('categories');
+    });
+  }
+
 }

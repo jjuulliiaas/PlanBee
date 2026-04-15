@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/theme/colors_extension.dart';
 import 'package:provider/provider.dart';
 import '../../../../blocks/statistics/provider.dart';
+import '../../../../generated/l10n.dart';
 import 'hint.dart';
 
 class YearActivityHeatmap extends StatelessWidget {
@@ -17,6 +18,8 @@ class YearActivityHeatmap extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final customColors = theme.extension<AppColorsExtension>();
 
+    final $ = S.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,8 +29,8 @@ class YearActivityHeatmap extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const StatsHint(text: 'Monthly consistency'),
-              _buildLegend(theme, colorScheme, customColors!),
+              StatsHint(text: $.monthlyConsistency),
+              _buildLegend(context, theme, colorScheme, customColors!),
             ],
           ),
         ),
@@ -46,7 +49,7 @@ class YearActivityHeatmap extends StatelessWidget {
               itemCount: 12,
               itemBuilder: (context, index) {
                 final activity = monthlyData[index];
-                final monthName = _getMonthName(index);
+                final monthName = _getMonthName(context, index);
                 final percentage = (activity * 100).round();
 
                 return GestureDetector(
@@ -145,15 +148,16 @@ class YearActivityHeatmap extends StatelessWidget {
     );
   }
 
-  Widget _buildLegend(ThemeData theme, ColorScheme colorScheme, AppColorsExtension customColors) {
+  Widget _buildLegend(BuildContext context, ThemeData theme, ColorScheme colorScheme, AppColorsExtension customColors) {
+    final $ = S.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('Low ', style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.outline, fontSize: 10.sp)),
+        Text($.low, style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.outline, fontSize: 10.sp)),
         _buildLevelBox(colorScheme.secondaryContainer),
         _buildLevelBox(customColors.yellow.withOpacity(0.5)),
         _buildLevelBox(customColors.yellow),
-        Text(' High', style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.outline, fontSize: 10.sp)),
+        Text($.high, style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.outline, fontSize: 10.sp)),
       ],
     );
   }
@@ -170,8 +174,22 @@ class YearActivityHeatmap extends StatelessWidget {
     );
   }
 
-  String _getMonthName(int index) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  String _getMonthName(BuildContext context, int index) {
+    final $ = S.of(context);
+    final months = [
+      $.monthJan,
+      $.monthFeb,
+      $.monthMar,
+      $.monthApr,
+      $.monthMay,
+      $.monthJun,
+      $.monthJul,
+      $.monthAug,
+      $.monthSep,
+      $.monthOct,
+      $.monthNov,
+      $.monthDec,
+    ];
     return months[index];
   }
 }

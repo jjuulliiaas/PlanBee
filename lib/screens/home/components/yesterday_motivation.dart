@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../blocks/statistics/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/colors_extension.dart';
+import '../../../generated/l10n.dart';
 
 class YesterdayMotivationWidget extends StatelessWidget {
   final VoidCallback? onClose;
@@ -101,6 +102,9 @@ class _MotivationContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final $ = S.of(context);
+    final message = $.completedTasks(count);
+    final parts = message.split(count.toString());
     final theme = Theme.of(context);
     final customColors = theme.extension<AppColorsExtension>();
 
@@ -109,7 +113,7 @@ class _MotivationContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'YESTERDAY SUCCESS',
+          $.yesterdaySuccess,
           style: theme.textTheme.labelSmall?.copyWith(
             color: customColors?.yellow.withOpacity(0.8),
             fontWeight: FontWeight.bold,
@@ -119,21 +123,21 @@ class _MotivationContent extends StatelessWidget {
         SizedBox(height: 2.h),
         Text.rich(
           TextSpan(
-            text: 'You completed ',
             style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
             children: [
+              TextSpan(text: parts.first),
               TextSpan(
-                text: '$count',
+                text: count.toString(),
                 style: TextStyle(
                   color: customColors?.yellow ?? Colors.orange,
                   fontWeight: FontWeight.bold,
                   fontSize: 18.sp,
                 ),
               ),
-              TextSpan(text: count == 1 ? ' task.' : ' tasks.'),
-              const TextSpan(
-                text: '\nBusy Bee! 🐝',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              TextSpan(text: parts.last),
+              TextSpan(
+                text: '\n${$.busyBee}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),

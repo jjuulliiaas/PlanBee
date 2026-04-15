@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocks/statistics/provider.dart';
+import '../../../generated/l10n.dart';
 
 class CategoryProgressSection extends StatelessWidget {
   const CategoryProgressSection({super.key});
@@ -12,13 +13,14 @@ class CategoryProgressSection extends StatelessWidget {
     final stats = context.watch<StatsProvider>();
     final theme = Theme.of(context);
     final progressList = stats.categoryProgress;
+    final $ = S.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 16.h),
-          child: Text('Progress by category', style: theme.textTheme.titleMedium),
+          child: Text($.progressByCategory, style: theme.textTheme.titleMedium),
         ),
         ...progressList.map((data) => _CategoryProgressCard(
           categoryName: data['name'],

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/utils/app_padding.dart';
 import '../../../core/utils/formatted_date.dart';
+import '../../../generated/l10n.dart';
 import '../../../widgets/app_switcher.dart';
 import '../../../widgets/detail_name.dart';
 import '../../../widgets/picked_chip.dart';
@@ -22,11 +23,15 @@ class DetailsCard extends StatelessWidget {
         categoryProvider:  context.read<CategoryProvider>(),
     );
 
+    final $ = S.of(context);
+
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
     final widthSpacer = SizedBox(width: 12.w,);
+
+    final locale = Localizations.localeOf(context).languageCode;
 
     return Card(
       elevation: 10,
@@ -40,7 +45,7 @@ class DetailsCard extends StatelessWidget {
               children: [
                 DetailName(
                   icon: Icons.calendar_month,
-                  text: 'Deadline',
+                  text: $.deadline,
                 ),
                 widthSpacer,
                 Expanded(
@@ -50,11 +55,11 @@ class DetailsCard extends StatelessWidget {
                       if (provider.selectedDate == null)
                         OutlinedButton(
                             onPressed: () => controller.onSelectDate(context),
-                            child: const Text('Set Date'))
+                            child: Text($.setDate))
                       else
                         Flexible(
                           child: PickedChip(
-                            label: DateHelper.formatShortMonthDay(provider.selectedDate!),
+                            label: DateHelper.formatShortMonthDay(provider.selectedDate!, locale),
                             onTap: () => controller.onSelectDate(context),
                           ),
                         ),
@@ -64,7 +69,7 @@ class DetailsCard extends StatelessWidget {
                       if (provider.selectedTime == null)
                         OutlinedButton(
                             onPressed: () => controller.onSelectTime(context),
-                            child: const Text('Set Time'))
+                            child: Text($.setTime))
                       else
                         Flexible(
                           child: PickedChip(
@@ -91,7 +96,7 @@ class DetailsCard extends StatelessWidget {
               children: [
                 DetailName(
                   icon: Icons.category_rounded,
-                  text: 'Category',
+                  text: $.category,
                 ),
                 widthSpacer,
                 Expanded(
@@ -104,7 +109,7 @@ class DetailsCard extends StatelessWidget {
                           label: Row(
                             children: [
                               Text(
-                                'Choose category',
+                                $.chooseCategory,
                                 style: textTheme.bodyMedium?.copyWith(color: colorScheme.primary),
                               ),
                               Icon(Icons.keyboard_arrow_down_outlined, color: colorScheme.primary)

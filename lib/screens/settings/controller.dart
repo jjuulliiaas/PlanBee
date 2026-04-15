@@ -17,7 +17,7 @@ class SettingsController {
     DialogsHelper.showClearDataDialog(
       context: context,
       onConfirm: () async {
-        await provider.resetAllData();
+        await provider.resetData();
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('All data cleared 🐝')),

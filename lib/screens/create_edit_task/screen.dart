@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../blocks/task/model.dart';
 import '../../core/utils/app_padding.dart';
+import '../../generated/l10n.dart';
 import 'body.dart';
 
 class CreateEditScreen extends StatelessWidget {
@@ -18,6 +19,8 @@ class CreateEditScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final textScheme = theme.textTheme;
 
+    final $ = S.of(context);
+
     final provider = context.watch<TaskProvider>();
     final categoryProvider = context.watch<CategoryProvider>();
     final controller = CreateEditController(
@@ -29,13 +32,13 @@ class CreateEditScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(isEditing ? 'Edit Task' : 'New Task'),
+          title: Text(isEditing ? $.editTask : $.newTask),
           titleTextStyle: textScheme.headlineSmall,
           leading: TextButton(
               onPressed: () {
                 controller.onCancel(context);
                 },
-              child: Text('Cancel')
+              child: Text($.cancel)
               ),
           actions: [
             TextButton(
@@ -46,7 +49,7 @@ class CreateEditScreen extends StatelessWidget {
                     )
                   : null,
               child: Text(
-                isEditing ? 'Update' : 'Save',
+                isEditing ? $.update : $.save,
                 style: TextStyle(
                   color: provider.canSave ? theme.colorScheme.primary : theme.colorScheme.secondary,
                 ),

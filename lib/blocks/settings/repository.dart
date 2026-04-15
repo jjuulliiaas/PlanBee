@@ -1,12 +1,22 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../services/db_service.dart';
+
 class SettingsRepository {
-  // Імітація збереження мови
+  static const String _langKey = 'selected_language';
+
   Future<void> saveLanguage(String lang) async {
-    // await prefs.setString('language', lang);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_langKey, lang);
   }
 
-  // Очищення всіх даних із TaskProvider або локальної БД
-  Future<void> clearDatabase() async {
-    // Логіка видалення файлів БД або очищення Hive/Sqflite
-    await Future.delayed(const Duration(milliseconds: 500));
+  Future<String> getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_langKey) ?? 'UK';
+  }
+
+  Future<void> clearAllData() async {
+    // await Future.delayed(const Duration(milliseconds: 300));
+    await DatabaseService.instance.deleteAllData();
   }
 }

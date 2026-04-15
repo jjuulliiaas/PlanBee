@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:planbee/core/theme/colors_extension.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 import '../../blocks/settings/provider.dart';
+import '../../generated/l10n.dart';
 import 'controller.dart';
 import 'language_switcher.dart';
 
@@ -13,6 +14,7 @@ class SettingsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final $ = S.of(context);
     final theme = Theme.of(context);
     final settingsProvider = context.watch<SettingsProvider>();
     final customColors = theme.extension<AppColorsExtension>();
@@ -29,11 +31,11 @@ class SettingsBody extends StatelessWidget {
 
               // General
               SettingsCard(
-                title: 'General',
+                title: $.general,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Language', style: theme.textTheme.bodyLarge),
+                    Text($.language, style: theme.textTheme.bodyLarge),
                     LanguageSwitcher(
                       currentLang: settingsProvider.language,
                       onChanged: controller.onLanguageChanged,
@@ -46,15 +48,15 @@ class SettingsBody extends StatelessWidget {
 
               // Data Management
               SettingsCard(
-                title: 'Data Management',
+                title: $.dataManagement,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Clear All Data', style: theme.textTheme.bodyLarge),
+                    Text($.clearAllData, style: theme.textTheme.bodyLarge),
                     TextButton(
                       onPressed: controller.onClearDataPressed,
                       child: Text(
-                        'Clear',
+                        $.clear,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.error,
                           fontWeight: FontWeight.bold,

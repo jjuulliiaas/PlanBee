@@ -40,7 +40,8 @@ class LanguageSwitcher extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () => onChanged(label),
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: isSelected ? customColors.yellow : theme.colorScheme.primaryContainer,

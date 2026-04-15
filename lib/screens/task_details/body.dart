@@ -7,6 +7,7 @@ import '../../blocks/task/provider.dart';
 import '../../core/theme/colors_extension.dart';
 import '../../core/utils/app_padding.dart';
 import '../../core/utils/formatted_date.dart';
+import '../../generated/l10n.dart';
 import '../../widgets/status_badge.dart';
 import '../../widgets/picked_chip.dart';
 import '../../widgets/priority_badge.dart';
@@ -38,6 +39,8 @@ class TaskDetailsBody extends StatelessWidget {
 
     final widthSpacer = SizedBox(width: 12.w);
     final heightSpacer = SizedBox(height: 8.h);
+
+    final $ = S.of(context);
 
     return SingleChildScrollView(
       child: Padding(
@@ -79,12 +82,12 @@ class TaskDetailsBody extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const PropertyName(title: 'Description'),
+                        PropertyName(title: $.description),
                         heightSpacer,
                         Text(
                           currentTask.description?.isNotEmpty == true
                               ? currentTask.description!
-                              : "No description provided",
+                              : $.noDescriptionProvided,
                           style: textTheme.bodyMedium,
                         ),
                       ],
@@ -100,10 +103,10 @@ class TaskDetailsBody extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const PropertyName(title: 'Category'),
+                              PropertyName(title: $.category),
                               heightSpacer,
                               PickedChip(
-                                label: currentTask.category?.name ?? 'General',
+                                label: currentTask.category?.name ?? $.general,
                                 onTap: () {},
                               ),
                             ],
@@ -113,10 +116,10 @@ class TaskDetailsBody extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const PropertyName(title: 'Deadline'),
+                            PropertyName(title: $.deadline),
                             heightSpacer,
                             Text(
-                              getFormattedDate(currentTask.deadline),
+                              getFormattedDate(context, currentTask.deadline),
                               style: textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: _getDeadlineColor(
@@ -136,7 +139,7 @@ class TaskDetailsBody extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const PropertyName(title: 'Status'),
+                        PropertyName(title: $.status),
                         StatusBadge(status: displayStatus),
                       ],
                     ),

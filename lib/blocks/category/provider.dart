@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planbee/generated/l10n.dart';
 
 import 'model.dart';
 
@@ -21,4 +22,19 @@ class CategoryProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+}
+
+extension CategoryL10n on String {
+  String toCategoryName(BuildContext context) {
+    final $ = S.of(context);
+    return switch (this) {
+      '1' => $.health,
+      '2' => $.personal,
+      '3' => $.home,
+      '4' => $.work,
+      '5' => $.study,
+      '6' => $.finance,
+      _ => $.noCategory,
+    };
+  }
 }

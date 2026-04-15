@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/widgets/app_confirm_button.dart';
 
 import '../../../../core/theme/colors_extension.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../widgets/app_choice_chip.dart';
 import '../../../../widgets/base_picker_layout.dart';
 import '../../../../widgets/time_picker_wheel.dart';
@@ -48,8 +49,10 @@ class _TimePickerState extends State<TimePicker> {
     final heightSpace = SizedBox(height: 24.h,);
     final weightSpace = SizedBox(width: 16.w,);
 
+    final $ = S.of(context);
+
     return BasePickerLayout(
-      title: 'Set Time',
+      title: $.setTime,
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -59,7 +62,7 @@ class _TimePickerState extends State<TimePicker> {
 
               /// Preset +1 hour from current time
               AppChoiceChip(
-                label: '+1 Hour',
+                label: $.plusOneHour,
                 icon: CupertinoIcons.timer,
                 iconColor: colorScheme.primary,
                 isSelected: false,
@@ -73,7 +76,7 @@ class _TimePickerState extends State<TimePicker> {
 
               /// Preset Morning 9:00
               AppChoiceChip(
-                label: 'Morning (9 AM)',
+                label: $.timeMorning,
                 icon: CupertinoIcons.sun_max_fill,
                 iconColor: customColors?.yellow,
                 isSelected: _isPresetActive(9, 0),
@@ -83,7 +86,7 @@ class _TimePickerState extends State<TimePicker> {
 
               /// Preset Evening 19:00
               AppChoiceChip(
-                label: 'Evening (7 PM)',
+                label: $.timeEvening,
                 icon: CupertinoIcons.moon_stars_fill,
                 iconColor: customColors?.yellow,
                 isSelected: _isPresetActive(19, 0),

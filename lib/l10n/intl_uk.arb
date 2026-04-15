@@ -1,0 +1,147 @@
+{
+  "@@locale": "uk",
+  "appName": "PlanBee",
+  "cancel": "Скасувати",
+  "save": "Зберегти",
+  "confirm": "Підтвердити",
+  "today": "Сьогодні",
+  "tomorrow": "Завтра",
+
+  "newTask": "Нове завдання",
+  "taskTitle": "Назва завдання...",
+  "addDescription": "Додати опис (опціонально)",
+  "deadline": "Дедлайн",
+  "setDate": "Дата",
+  "setTime": "Час",
+  "category": "Категорія",
+  "chooseCategory": "Обрати категорію",
+  "highPriority": "Високий пріоритет",
+
+  "timeMorning": "Ранок (9:00)",
+  "timeEvening": "Вечір (19:00)",
+  "plusOneHour": "+1 година",
+
+  "health": "Здоров'я",
+  "personal": "Особисте",
+  "home": "Дім",
+  "work": "Робота",
+  "study": "Навчання",
+  "finance": "Фінанси",
+  "noCategory": "Без категорії",
+  "createNewCategory": "Створити нову категорію",
+  "categoryTitle": "Назва категорії",
+  "selectIcon": "Обрати іконку",
+
+  "editTask": "Редагувати",
+  "update": "Оновити",
+
+  "todaysPlan": "План на сьогодні",
+  "addTask": "Додати",
+  "yesterdaySuccess": "УСПІХ ЗА ВЧОРА",
+  "completedTasks": "Ви виконали {count} завдань.",
+  "@completedTasks": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "busyBee": "Працьовита бджілка! 🐝",
+  "timerIsRunning": "Таймер працює... {time}",
+  "@timerIsRunning": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "yesterday": "Вчора",
+
+  "taskDetails": "Деталі",
+  "edit": "Редагувати",
+  "addDescriptionOptional": "Додати опис (опціонально)",
+  "description": "Опис",
+  "status": "Статус",
+  "focusTimer": "Таймер фокусу",
+  "startFocus": "Почати фокус",
+  "stopFocus": "Зупинити",
+  "minutesShort": "{count}",
+  "@minutesShort": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "custom": "Власний",
+  "markAsCompleted": "Позначити як виконане",
+  "taskCompleted": "Завдання виконано",
+  "noDescriptionProvided": "Немає опису",
+  "add5Min": "+ 5 хвилин",
+  "timeUpGreatFocus": "Час скінчився. Чудова сесія фокусу!",
+  "done": "Виконано",
+  "pauseFocus": "Зупинити фокус",
+  "resumeTimer": "Продовжити фокус",
+  "minutesUnit": "хвилин",
+
+  "allTasks": "Усі завдання",
+  "list": "Список",
+  "calendar": "Календар",
+  "filterPlanned": "Заплановано",
+  "filterInProgress": "У процесі",
+  "filterCompleted": "Виконано",
+  "filterMissed": "Пропущено",
+  "sortTasks": "Сортування",
+  "sortNewest": "Спочатку нові",
+  "sortOldest": "Спочатку старі",
+  "sortHighPriority": "Високий пріоритет",
+  "sortAlphabet": "За алфавітом (А-Я)",
+  "noTasksFound": "Поки немає завдань 🐝",
+
+  "statistics": "Статистика",
+  "overview": "Огляд",
+  "tasksCreated": "Створено завдань",
+  "toDo": "До виконання",
+  "completed": "Виконано",
+  "remaining": "Залишилось",
+  "activity": "Активність",
+  "weekly": "Тиждень",
+  "yearly": "Рік",
+  "dailyRate": "Денний рівень виконання",
+  "monthlyConsistency": "Стабільність по місяцях",
+  "low": "Низька",
+  "high": "Висока",
+  "goldenBeeHour": "Золота година бджілки",
+  "progressByCategory": "Прогрес категорій",
+
+  "monthJan": "Січ",
+  "monthFeb": "Лют",
+  "monthMar": "Бер",
+  "monthApr": "Квіт",
+  "monthMay": "Трав",
+  "monthJun": "Черв",
+  "monthJul": "Лип",
+  "monthAug": "Серп",
+  "monthSep": "Вер",
+  "monthOct": "Жовт",
+  "monthNov": "Лист",
+  "monthDec": "Груд",
+
+  "dayMon": "Пн",
+  "dayTue": "Вт",
+  "dayWed": "Ср",
+  "dayThu": "Чт",
+  "dayFri": "Пт",
+  "daySat": "Сб",
+  "daySun": "Нд",
+
+  "settings": "Налаштування",
+  "general": "Загальні",
+  "language": "Мова",
+  "dataManagement": "Керування даними",
+  "clearAllData": "Очистити всі дані",
+  "clear": "Очистити",
+
+  "statusPlanned": "Заплановано",
+  "statusInProgress": "У процесі",
+  "statusCompleted": "Готово",
+  "statusMissed": "Минуло",
+
+  "freeDay": "Вільний день! 🐝"
+}

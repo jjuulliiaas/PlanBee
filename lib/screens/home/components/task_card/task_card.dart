@@ -5,10 +5,12 @@ import 'package:planbee/core/utils/app_padding.dart';
 import 'package:planbee/widgets/priority_badge.dart';
 import 'package:planbee/widgets/status_badge.dart';
 import 'package:provider/provider.dart';
+import '../../../../blocks/category/provider.dart';
 import '../../../../blocks/task/model.dart';
 import '../../../../blocks/timer/provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/formatted_date.dart';
+import '../../../../generated/l10n.dart';
 import 'check_box.dart';
 import 'info_column.dart';
 
@@ -36,6 +38,8 @@ class TaskCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    final $ = S.of(context);
 
     return Card(
       margin: EdgeInsets.only(bottom: 16.h),
@@ -93,8 +97,8 @@ class TaskCard extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: InfoColumn(
-                      label: 'Category',
-                      value: task.category?.name ?? 'General',
+                      label: $.category,
+                      value: task.category?.id.toCategoryName(context) ?? $.general,
                       colorValue: colorScheme.primary,
                     ),
                   ),
@@ -102,8 +106,8 @@ class TaskCard extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: InfoColumn(
-                      label: 'Deadline',
-                      value: getFormattedDate(task.deadline),
+                      label: $.deadline,
+                      value: getFormattedDate(context, task.deadline),
                       colorValue: task.effectiveStatus == TaskStatus.missed
                           ? colorScheme.error
                           : colorScheme.primary,
@@ -124,7 +128,7 @@ class TaskCard extends StatelessWidget {
                       size: 15.r,
                     ),
                     Text(
-                      'Timer is running... ${timerProvider.formattedTime}',
+                      $.timerIsRunning(timerProvider.formattedTime),
                       style: textTheme.labelLarge?.copyWith(color: colorScheme.outline),
                     ),
                   ],

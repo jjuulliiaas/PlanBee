@@ -98,6 +98,12 @@ class TaskProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  void resetState() {
+    _tasks = [];
+    _isLoading = false;
+    notifyListeners();
+  }
+
   void addTask(TaskModel task) {
     _tasks.add(task);
     _tasks.sort((a, b) => a.deadline.compareTo(b.deadline));

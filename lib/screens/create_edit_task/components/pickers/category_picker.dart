@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../blocks/category/provider.dart';
 import '../../../../blocks/task/provider.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../widgets/app_confirm_button.dart';
 import '../../../../widgets/base_picker_layout.dart';
 import '../../../../widgets/detail_name.dart';
@@ -16,6 +17,7 @@ class CategoryPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final $ = S.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -30,7 +32,7 @@ class CategoryPicker extends StatelessWidget {
     final categories = categoryProvider.categories;
 
     return BasePickerLayout(
-      title: 'Choose Category',
+      title: $.chooseCategory,
       children: [
         SizedBox(
           height: 350.h,
@@ -51,7 +53,7 @@ class CategoryPicker extends StatelessWidget {
                   ),
                   child: DetailName(
                     icon: item.icon,
-                    text: item.name,
+                    text: item.id.toCategoryName(context),
                     alignment: MainAxisAlignment.start,
                     forceWhite: isSelected,
                   ),
@@ -63,9 +65,9 @@ class CategoryPicker extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 ),
-                child: const DetailName(
+                child: DetailName(
                   icon: Icons.add,
-                  text: 'Create Category',
+                  text: $.createNewCategory,
                   alignment: MainAxisAlignment.start,
                 ),
               );

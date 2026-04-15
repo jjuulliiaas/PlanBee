@@ -1,57 +1,69 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:planbee/core/theme/colors_extension.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocks/all_tasks/provider.dart';
 import '../../../blocks/task/model.dart';
+import '../../../generated/l10n.dart'; // Імпортуємо локалізацію
 import '../controller.dart';
 
 class FilterBar extends StatelessWidget {
   final AllTasksController controller;
   const FilterBar({super.key, required this.controller});
 
-  Color _getStatusColor(TaskStatus? status, ThemeData theme) {
-    switch (status) {
-      case TaskStatus.planned: return Colors.blue;
-      case TaskStatus.inProgress: return Colors.orange;
-      case TaskStatus.completed: return Colors.green;
-      case TaskStatus.missed: return Colors.red;
-      default: return theme.colorScheme.primary;
-    }
+  (Color, String) _getStatusData(TaskStatus status, BuildContext context, ThemeData theme) {
+    final s = S.of(context);
+    final customColors = theme.extension<AppColorsExtension>();
+
+    return switch (status) {
+      TaskStatus.planned => (theme.colorScheme.primary, s.statusPlanned),
+      TaskStatus.inProgress => (customColors?.yellow ?? Colors.orange, s.statusInProgress),
+      TaskStatus.completed => (customColors?.success ?? Colors.green, s.statusCompleted),
+      TaskStatus.missed => (theme.colorScheme.error, s.statusMissed),
+    };
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final currentStatus = context.select<AllTasksProvider, TaskStatus?>(
-            (p) => p.filterStatus
+          (p) => p.filterStatus,
     );
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: AppPadding.screen(context),
+      padding: AppPadding.screen(context).copyWith(top: 8.h, bottom: 8.h),
+      physics: const BouncingScrollPhysics(),
       child: Row(
-        children: [
-          ...TaskStatus.values.map((status) => Padding(
-            padding: EdgeInsets.only(left: 8.w),
+        children: TaskStatus.values.map((status) {
+          final (color, label) = _getStatusData(status, context, theme);
+
+          return Padding(
+            padding: EdgeInsets.only(right: 8.w),
             child: _buildFilterChip(
-                _formatStatusName(status.name),
-                status,
-                currentStatus,
-                theme
+              label,
+              status,
+              currentStatus,
+              color,
+              theme,
             ),
-          )),
-        ],
+          );
+        }).toList(),
       ),
     );
   }
 
-  Widget _buildFilterChip(String label, TaskStatus? status, TaskStatus? currentSelected, ThemeData theme) {
+  Widget _buildFilterChip(
+      String label,
+      TaskStatus status,
+      TaskStatus? currentSelected,
+      Color color,
+      ThemeData theme,
+      ) {
     final isSelected = currentSelected == status;
-    final color = _getStatusColor(status, theme);
 
     return GestureDetector(
       onTap: () {
@@ -59,30 +71,39 @@ class FilterBar extends StatelessWidget {
         controller.onStatusFilterChanged(isSelected ? null : status);
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+        duration: const Duration(milliseconds: 250),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
         decoration: BoxDecoration(
-          color: isSelected ? color.withOpacity(0.1) : theme.colorScheme.surface,
+          color: isSelected ? color.withOpacity(0.01) : theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: isSelected ? color : theme.colorScheme.primary.withOpacity(0.1),
-            width: 1,
+            color: isSelected ? color : theme.colorScheme.primaryContainer,
+            width: 1.0,
           ),
+          boxShadow: isSelected
+              ? [BoxShadow(color: color.withOpacity(0.1), blurRadius: 4, offset: const Offset(0, 2))]
+              : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 6.r,
-              height: 6.r,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              width: 7.r,
+              height: 7.r,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(color: color.withOpacity(0.4), blurRadius: 2, spreadRadius: 1)
+                ],
+              ),
             ),
-            SizedBox(width: 6.w),
+            SizedBox(width: 8.w),
             Text(
               label,
               style: theme.textTheme.labelMedium?.copyWith(
                 color: isSelected ? theme.colorScheme.onSurface : theme.colorScheme.outline,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
               ),
             ),
           ],
@@ -90,12 +111,4 @@ class FilterBar extends StatelessWidget {
       ),
     );
   }
-
-  String _formatStatusName(String name) {
-    return name.replaceAllMapped(RegExp(r'([A-Z])'), (match) => ' ${match.group(0)}').trim().capitalize();
-  }
-}
-
-extension StringExtension on String {
-  String capitalize() => "${this[0].toUpperCase()}${substring(1)}";
 }

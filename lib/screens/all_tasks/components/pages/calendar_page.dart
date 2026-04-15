@@ -7,6 +7,7 @@ import '../../../../blocks/all_tasks/provider.dart';
 import '../../../../blocks/task/model.dart';
 import '../../../../blocks/task/provider.dart';
 import '../../../../core/utils/app_padding.dart';
+import '../../../../generated/l10n.dart';
 import '../../../home/components/task_card/task_card.dart';
 import '../../controller.dart';
 
@@ -25,6 +26,7 @@ class AllTasksCalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final $ = S.of(context);
 
     return CustomScrollView(
       slivers: [
@@ -110,7 +112,7 @@ class AllTasksCalendarPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                    "Free day! 🐝",
+                    $.freeDay,
                     style: theme.textTheme.bodyLarge?.copyWith(
                         color: theme.colorScheme.outline)
                 ),

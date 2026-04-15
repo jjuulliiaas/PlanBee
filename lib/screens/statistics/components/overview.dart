@@ -5,6 +5,7 @@ import 'package:planbee/core/utils/app_padding.dart';
 import 'package:provider/provider.dart';
 import '../../../blocks/statistics/provider.dart';
 import '../../../core/theme/colors_extension.dart';
+import '../../../generated/l10n.dart';
 
 class OverviewCard extends StatelessWidget {
   const OverviewCard({super.key});
@@ -15,7 +16,7 @@ class OverviewCard extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
-
+    final $ = S.of(context);
     final heightSpacer = SizedBox(height: 16.h);
 
     return Card(
@@ -24,7 +25,7 @@ class OverviewCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Overview', style: textTheme.bodyLarge),
+            Text($.overview, style: textTheme.bodyLarge),
             heightSpacer,
             Row(
               children: [
@@ -36,9 +37,9 @@ class OverviewCard extends StatelessWidget {
 
                 const Spacer(),
 
-                _buildStatItem(context, provider.totalCount.toString(), 'Tasks created'),
+                _buildStatItem(context, provider.totalCount.toString(), $.tasksCreated),
                 SizedBox(width: 24.w),
-                _buildStatItem(context, provider.activeCount.toString(), 'To do'),
+                _buildStatItem(context, provider.activeCount.toString(), $.toDo),
               ],
             ),
             heightSpacer,
@@ -121,15 +122,16 @@ class _ChartLegend extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final labelStyle = Theme.of(context).textTheme.labelMedium?.copyWith(color: colorScheme.outline);
     final customColors = Theme.of(context).extension<AppColorsExtension>();
+    final $ = S.of(context);
 
     return Padding(
       padding: EdgeInsets.only(top: 8.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _legendItem(customColors!.success, 'Completed', labelStyle),
+          _legendItem(customColors!.success, $.completed, labelStyle),
           SizedBox(width: 24.w),
-          _legendItem(customColors.successSoft, 'Remaining', labelStyle),
+          _legendItem(customColors.successSoft, $.remaining, labelStyle),
         ],
       ),
     );

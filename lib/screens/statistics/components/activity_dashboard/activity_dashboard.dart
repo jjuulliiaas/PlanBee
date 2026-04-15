@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:planbee/core/utils/app_padding.dart';
 import 'package:planbee/screens/statistics/components/activity_dashboard/weekly_chart.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../generated/l10n.dart';
 import '../../../all_tasks/components/browser_tab_indicator.dart';
 import 'activity_heat_map.dart';
 
@@ -14,6 +15,7 @@ class ActivityDashboard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+    final $ = S.of(context);
 
     return DefaultTabController(
       length: 2,
@@ -26,7 +28,7 @@ class ActivityDashboard extends StatelessWidget {
             Padding(
               padding: AppPadding.screen(context),
               child: Text(
-                'Activity',
+                $.activity,
                 style: textTheme.bodyLarge,
               ),
             ),
@@ -60,9 +62,9 @@ class ActivityDashboard extends StatelessWidget {
                   unselectedLabelColor: colorScheme.secondary,
                   labelStyle: theme.textTheme.bodyMedium,
 
-                  tabs: const [
-                    Tab(text: 'Weekly'),
-                    Tab(text: 'Yearly'),
+                  tabs: [
+                    Tab(text: $.weekly),
+                    Tab(text: $.yearly),
                   ],
                 ),
               ),

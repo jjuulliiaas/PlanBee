@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_screenutil: ^5.9.0
   sqflite: ^2.4.2
   path: ^1.8.3
@@ -46,6 +48,8 @@ dependencies:
   fl_chart: ^1.2.0
   sleek_circular_slider: ^2.1.0
   liquid_glass_renderer: ^0.2.0-dev.4
+  shared_preferences: ^2.5.5
+  intl_utils: ^2.8.14
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +73,12 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+flutter_intl:
+  enabled: true
+  class_name: S
+  main_locale: en
+  arb_dir: lib/l10n
+  output_dir: lib/generated
   # To add assets to your application, add an assets section, like this:
 assets:
 

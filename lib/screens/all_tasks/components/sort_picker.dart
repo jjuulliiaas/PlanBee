@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../../blocks/all_tasks/provider.dart';
 import '../../../../widgets/base_picker_layout.dart';
+import '../../../generated/l10n.dart';
 
 class SortPicker extends StatelessWidget {
   const SortPicker({super.key});
@@ -12,19 +13,20 @@ class SortPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final $ = S.of(context);
 
     final provider = context.watch<AllTasksProvider>();
     final currentOption = provider.sortOption;
 
     final List<Map<String, dynamic>> options = [
-      {'option': TaskSortOption.newest, 'title': 'Newest First', 'icon': CupertinoIcons.arrow_down},
-      {'option': TaskSortOption.oldest, 'title': 'Oldest First', 'icon': CupertinoIcons.arrow_up},
-      {'option': TaskSortOption.priority, 'title': 'High Priority', 'icon': CupertinoIcons.star_circle},
-      {'option': TaskSortOption.alphabet, 'title': 'Alphabet (A-Z)', 'icon': Icons.sort_by_alpha_rounded},
+      {'option': TaskSortOption.newest, 'title': $.sortNewest, 'icon': CupertinoIcons.arrow_down},
+      {'option': TaskSortOption.oldest, 'title': $.sortOldest, 'icon': CupertinoIcons.arrow_up},
+      {'option': TaskSortOption.priority, 'title': $.sortHighPriority, 'icon': CupertinoIcons.star_circle},
+      {'option': TaskSortOption.alphabet, 'title': $.sortAlphabet, 'icon': Icons.sort_by_alpha_rounded},
     ];
 
     return BasePickerLayout(
-      title: 'Sort Tasks',
+      title: $.sortTasks,
       children: options.map((item) {
         final option = item['option'] as TaskSortOption;
         final isSelected = currentOption == option;

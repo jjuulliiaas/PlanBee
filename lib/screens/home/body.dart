@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../blocks/statistics/provider.dart';
 import '../../blocks/task/model.dart';
 import '../../blocks/timer/provider.dart';
+import '../../generated/l10n.dart';
 import '../../routes.dart';
 import 'components/task_card/task_card.dart';
 import 'components/yesterday_motivation.dart';
@@ -20,6 +21,8 @@ class HomeBody extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
+
+    final $ = S.of(context);
 
     final taskProvider = context.watch<TaskProvider>();
     final timerProvider = context.read<TimerProvider>();
@@ -50,14 +53,14 @@ class HomeBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Today\'s plan',
+                $.todaysPlan,
                 style: textTheme.headlineSmall,
               ),
               ElevatedButton.icon(
                 onPressed: () => controller.navigateToCreateTask(context, AppRoutes.create),
                 icon: Icon(Icons.add, size: 20.r),
                 label: Text(
-                  'Add',
+                  $.addTask,
                   style: textTheme.bodyLarge?.copyWith(color: colorScheme.onPrimary),
                 ),
               )
@@ -73,7 +76,7 @@ class HomeBody extends StatelessWidget {
           SizedBox(height: 8.h),
 
           if (todayTasks.isEmpty)
-            _buildEmptyState(textTheme)
+            _buildEmptyState(context, textTheme)
           else
             ...todayTasks.map((task) {
               return Padding(
@@ -93,7 +96,8 @@ class HomeBody extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyState(TextTheme textTheme) {
+  Widget _buildEmptyState(BuildContext context, TextTheme textTheme) {
+    final $ = S.of(context);
     return Padding(
       padding: EdgeInsets.only(top: 100.h),
       child: Column(
@@ -101,7 +105,7 @@ class HomeBody extends StatelessWidget {
           Icon(Icons.wb_sunny_outlined, size: 50.r, color: Colors.grey),
           SizedBox(height: 10.h),
           Text(
-            'No tasks for today! 🐝',
+            $.noTasksFound,
             style: textTheme.bodyLarge?.copyWith(color: Colors.grey),
           ),
         ],

@@ -1,0 +1,150 @@
+{
+  "@@locale": "en",
+  "appName": "PlanBee",
+  "cancel": "Cancel",
+  "save": "Save",
+  "confirm": "Confirm",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+
+  "newTask": "New Task",
+  "taskTitle": "Task title...",
+  "addDescription": "Add description (optional)",
+  "deadline": "Deadline",
+  "setDate": "Set Date",
+  "setTime": "Set Time",
+  "category": "Category",
+  "chooseCategory": "Choose category",
+  "highPriority": "High priority",
+
+  "timeMorning": "Morning (9 AM)",
+  "timeEvening": "Evening (7 PM)",
+  "plusOneHour": "+1 Hour",
+
+  "health": "Health",
+  "personal": "Personal",
+  "home": "Home",
+  "work": "Work",
+  "study": "Study",
+  "finance": "Finance",
+  "noCategory": "No Category",
+  "createNewCategory": "Add New Category",
+  "categoryTitle": "Category title",
+  "selectIcon": "Select icon",
+
+  "editTask": "Edit Task",
+  "update": "Update",
+
+  "todaysPlan": "Today's plan",
+  "addTask": "Add",
+  "yesterdaySuccess": "YESTERDAY SUCCESS",
+  "completedTasks": "You completed {count} tasks.",
+  "@completedTasks": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "busyBee": "Busy Bee! 🐝",
+  "timerIsRunning": "Timer is running... {time}",
+  "@timerIsRunning": {
+    "description": "Label showing the current status and time of the countdown",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "00:25"
+      }
+    }
+  },
+  "yesterday": "Yesterday",
+
+  "taskDetails": "Task Details",
+  "edit": "Edit",
+  "addDescriptionOptional": "Description (optional)",
+  "description": "Description",
+  "status": "Status",
+  "focusTimer": "Focus Timer",
+  "startFocus": "Start Focus",
+  "stopFocus": "Stop Focus",
+  "minutesShort": "{count}",
+  "@minutesShort": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "custom": "Custom",
+  "markAsCompleted": "Mark as completed",
+  "taskCompleted": "Task Completed",
+  "noDescriptionProvided": "No description provided",
+  "add5Min": "Add 5 min",
+  "timeUpGreatFocus": "Time's up. Great focus session!",
+  "done": "Done",
+  "pauseFocus": "Pause Focus",
+  "resumeTimer": "Resume Timer",
+  "minutesUnit": "mins",
+
+
+  "allTasks": "All Tasks",
+  "list": "List",
+  "calendar": "Calendar",
+  "filterPlanned": "Planned",
+  "filterInProgress": "In Progress",
+  "filterCompleted": "Completed",
+  "filterMissed": "Missed",
+  "sortTasks": "Sort Tasks",
+  "sortNewest": "Newest First",
+  "sortOldest": "Oldest First",
+  "sortHighPriority": "High Priority",
+  "sortAlphabet": "Alphabet (A-Z)",
+  "noTasksFound": "No tasks found 🐝",
+
+  "statistics": "Statistics",
+  "overview": "Overview",
+  "tasksCreated": "Tasks created",
+  "toDo": "To do",
+  "completed": "Completed",
+  "remaining": "Remaining",
+  "activity": "Activity",
+  "weekly": "Weekly",
+  "yearly": "Yearly",
+  "dailyRate": "Daily completion rate",
+  "monthlyConsistency": "Monthly consistency",
+  "low": "Low",
+  "high": "High",
+  "goldenBeeHour": "Golden Bee Hour",
+  "progressByCategory": "Progress by category",
+
+  "monthJan": "Jan",
+  "monthFeb": "Feb",
+  "monthMar": "Mar",
+  "monthApr": "Apr",
+  "monthMay": "May",
+  "monthJun": "Jun",
+  "monthJul": "Jul",
+  "monthAug": "Aug",
+  "monthSep": "Sep",
+  "monthOct": "Oct",
+  "monthNov": "Nov",
+  "monthDec": "Dec",
+
+  "dayMon": "Mo",
+  "dayTue": "Tu",
+  "dayWed": "We",
+  "dayThu": "Th",
+  "dayFri": "Fr",
+  "daySat": "Sa",
+  "daySun": "Su",
+
+  "settings": "Settings",
+  "general": "General",
+  "language": "Language",
+  "dataManagement": "Data Management",
+  "clearAllData": "Clear All Data",
+  "clear": "Clear",
+
+  "statusPlanned": "Planned",
+  "statusInProgress": "In Progress",
+  "statusCompleted": "Completed",
+  "statusMissed": "Missed",
+
+  "freeDay": "Free day! 🐝"
+}

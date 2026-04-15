@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../blocks/task/model.dart';
 import '../../core/theme/colors_extension.dart';
+import '../../generated/l10n.dart';
 import '../../widgets/app_confirm_button.dart';
 import 'body.dart';
 import 'controller.dart';
@@ -24,21 +25,23 @@ class TaskDetailsScreen extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final customColors = theme.extension<AppColorsExtension>();
 
+    final $ = S.of(context);
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Task Details'),
+          title: Text($.taskDetails),
           titleTextStyle: textScheme.headlineSmall,
           leading: TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel')
+              child: Text($.cancel)
           ),
           actions: [
             TextButton(
               onPressed: () => controller.navigateToEditTask(context, task),
               child: Text(
-                'Edit',
+                $.edit,
                 style: TextStyle(
                   color: theme.colorScheme.primary,
                 ),
@@ -52,7 +55,7 @@ class TaskDetailsScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: AppConfirmButton(
             onTap: controller.toggleTaskStatus,
-            text: isCompleted ? 'Task Completed' : 'Mark as completed',
+            text: isCompleted ? $.taskCompleted : $.markAsCompleted,
             icon: Icon(Icons.done),
             color: isCompleted ? customColors?.success : colorScheme.primary,
           ),

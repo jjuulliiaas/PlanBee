@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
 import 'detail_name.dart';
 
 class AppSwitcher extends StatelessWidget {
@@ -14,12 +15,14 @@ class AppSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final $ = S.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const DetailName(
+        DetailName(
           icon: Icons.priority_high_rounded,
-          text: 'High priority',
+          text: $.highPriority,
         ),
         Transform.scale(
           scale: 0.8,

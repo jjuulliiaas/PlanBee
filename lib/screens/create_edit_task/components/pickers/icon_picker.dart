@@ -4,6 +4,7 @@ import 'package:planbee/core/utils/app_padding.dart';
 import 'package:planbee/core/utils/icons_list.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../widgets/text_button_icon.dart';
 
 class IconPicker extends StatefulWidget {
@@ -31,13 +32,14 @@ class _IconPickerState extends State<IconPicker> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final $ = S.of(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButtonIcon(
             onPressed: () {},
-            text: 'Select icon',
+            text: $.selectIcon,
             icon: Icons.keyboard_arrow_down_outlined,
           ),
           SizedBox(height: 8.h,),

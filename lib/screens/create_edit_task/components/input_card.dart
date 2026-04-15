@@ -3,6 +3,7 @@ import 'package:planbee/core/utils/app_padding.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocks/task/provider.dart';
+import '../../../generated/l10n.dart';
 
 class InputCard extends StatelessWidget {
   const InputCard({
@@ -18,6 +19,7 @@ class InputCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final $ = S.of(context);
 
     final provider = context.read<TaskProvider>();
 
@@ -34,8 +36,8 @@ class InputCard extends StatelessWidget {
               maxLines: null,
               minLines: 1,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                hintText: 'Task title...'
+              decoration: InputDecoration(
+                hintText: $.taskTitle
               ),
             ),
             const Divider(),
@@ -45,8 +47,8 @@ class InputCard extends StatelessWidget {
               style: textTheme.bodyLarge,
               maxLines: null,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
-                  hintText: 'Add description (optional)'
+              decoration: InputDecoration(
+                  hintText: $.addDescriptionOptional
               ),
             ),
           ],

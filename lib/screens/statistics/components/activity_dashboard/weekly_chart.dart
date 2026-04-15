@@ -5,6 +5,7 @@ import 'package:planbee/core/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocks/statistics/provider.dart';
+import '../../../../generated/l10n.dart';
 import 'hint.dart';
 
 class WeeklyActivityCard extends StatelessWidget {
@@ -16,6 +17,7 @@ class WeeklyActivityCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final weeklyData = stats.weeklyData;
+    final $ = S.of(context);
 
     return Padding(
       padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 20.h),
@@ -27,7 +29,7 @@ class WeeklyActivityCard extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StatsHint(text: 'Daily completion rate'),
+              StatsHint(text: $.dailyRate),
               SizedBox(height: 12.h),
               Expanded(
                 child: BarChart(
@@ -40,8 +42,9 @@ class WeeklyActivityCard extends StatelessWidget {
                         getTooltipColor: (_) => colorScheme.primaryContainer,
                         tooltipBorderRadius: BorderRadius.circular(AppTheme.radiusSmall),
                         getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                          final dayName = _getDayName(context, groupIndex);
                           return BarTooltipItem(
-                            '${weeklyData[groupIndex].key}\n',
+                            '$dayName\n',
                             theme.textTheme.labelMedium!.copyWith(
                               fontWeight: FontWeight.bold,
                               color: colorScheme.onPrimaryContainer,
@@ -64,7 +67,7 @@ class WeeklyActivityCard extends StatelessWidget {
                       bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
-                          getTitlesWidget: (value, _) => _bottomTitles(value, weeklyData, theme),
+                          getTitlesWidget: (value, _) => _bottomTitles(context, value, weeklyData, theme),
                           reservedSize: 30,
                         ),
                       ),
@@ -116,19 +119,33 @@ class WeeklyActivityCard extends StatelessWidget {
     });
   }
 
-  Widget _bottomTitles(double value, List<MapEntry<String, double>> data, ThemeData theme) {
+  Widget _bottomTitles(BuildContext context, double value, List<MapEntry<String, double>> data, ThemeData theme) {
     final index = value.toInt();
     if (index < 0 || index >= data.length) return const SizedBox.shrink();
     return Padding(
       padding: EdgeInsets.only(top: 8.h),
       child: Text(
-        data[index].key.substring(0, 2),
+        _getDayName(context, index),
         style: theme.textTheme.labelSmall?.copyWith(
           color: Colors.grey.shade500,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
+  }
+
+  String _getDayName(BuildContext context, int index) {
+    final $ = S.of(context);
+    final days = [
+      $.dayMon,
+      $.dayTue,
+      $.dayWed,
+      $.dayThu,
+      $.dayFri,
+      $.daySat,
+      $.daySun,
+    ];
+    return days[index];
   }
 }
 
