@@ -69,6 +69,7 @@ class StatsRepository {
     });
   }
 
+  // В класі StatsRepository
   List<Map<String, dynamic>> getCategoryProgress(List<TaskModel> tasks) {
     if (tasks.isEmpty) return [];
 
@@ -76,7 +77,7 @@ class StatsRepository {
     final Map<String, CategoryModel?> categoryObjects = {};
 
     for (var task in tasks) {
-      final catId = task.category?.id ?? 'general';
+      final catId = task.category?.id ?? '7';
       groupedById.putIfAbsent(catId, () => []).add(task);
 
       if (!categoryObjects.containsKey(catId)) {
@@ -92,9 +93,10 @@ class StatsRepository {
       final category = categoryObjects[catId];
 
       final completed = list.where((t) => t.isCompleted).length;
-      final progress = completed / list.length;
+      final progress = list.isEmpty ? 0.0 : completed / list.length;
 
       result.add({
+        'id': catId,
         'name': category?.name ?? 'General',
         'icon': category?.icon ?? Icons.category_rounded,
         'color': category?.iconColor,

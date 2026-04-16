@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../blocks/category/provider.dart';
 import '../../../blocks/statistics/provider.dart';
 import '../../../generated/l10n.dart';
 
@@ -23,7 +24,7 @@ class CategoryProgressSection extends StatelessWidget {
           child: Text($.progressByCategory, style: theme.textTheme.titleMedium),
         ),
         ...progressList.map((data) => _CategoryProgressCard(
-          categoryName: data['name'],
+          categoryId: data['id'],
           icon: data['icon'],
           progress: data['progress'],
         )),
@@ -33,12 +34,12 @@ class CategoryProgressSection extends StatelessWidget {
 }
 
 class _CategoryProgressCard extends StatelessWidget {
-  final String categoryName;
+  final String categoryId;
   final IconData icon;
   final double progress;
 
   const _CategoryProgressCard({
-    required this.categoryName,
+    required this.categoryId,
     required this.icon,
     required this.progress,
   });
@@ -47,6 +48,8 @@ class _CategoryProgressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
+    final localizedName = categoryId.toCategoryName(context);
 
     return Card(
       margin: EdgeInsets.only(bottom: 12.h),
@@ -70,7 +73,7 @@ class _CategoryProgressCard extends StatelessWidget {
                       SizedBox(width: 12.w),
                       Expanded(
                         child: Text(
-                          categoryName,
+                          localizedName,
                           style: theme.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             height: 1.2,
