@@ -47,6 +47,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "chooseCategory": MessageLookupByLibrary.simpleMessage("Choose category"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "clearAllData": MessageLookupByLibrary.simpleMessage("Clear All Data"),
+    "clearAllDataDescription": MessageLookupByLibrary.simpleMessage(
+      "This action is permanent. All your tasks will be deleted.",
+    ),
+    "clearAllDataTitle": MessageLookupByLibrary.simpleMessage(
+      "Clear All Data?",
+    ),
     "completed": MessageLookupByLibrary.simpleMessage("Completed"),
     "completedTasks": m0,
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),

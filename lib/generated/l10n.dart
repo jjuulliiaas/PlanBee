@@ -754,6 +754,26 @@ class S {
     return Intl.message('Clear', name: 'clear', desc: '', args: []);
   }
 
+  /// `Clear All Data?`
+  String get clearAllDataTitle {
+    return Intl.message(
+      'Clear All Data?',
+      name: 'clearAllDataTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This action is permanent. All your tasks will be deleted.`
+  String get clearAllDataDescription {
+    return Intl.message(
+      'This action is permanent. All your tasks will be deleted.',
+      name: 'clearAllDataDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Planned`
   String get statusPlanned {
     return Intl.message('Planned', name: 'statusPlanned', desc: '', args: []);

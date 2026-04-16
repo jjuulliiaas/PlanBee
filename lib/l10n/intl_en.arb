@@ -140,6 +140,8 @@
   "dataManagement": "Data Management",
   "clearAllData": "Clear All Data",
   "clear": "Clear",
+  "clearAllDataTitle": "Clear All Data?",
+  "clearAllDataDescription": "This action is permanent. All your tasks will be deleted.",
 
   "statusPlanned": "Planned",
   "statusInProgress": "In Progress",

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../blocks/category/provider.dart';
 import '../../blocks/task/model.dart';
 import '../../blocks/task/provider.dart';
 import '../../core/theme/colors_extension.dart';
@@ -106,7 +107,7 @@ class TaskDetailsBody extends StatelessWidget {
                               PropertyName(title: $.category),
                               heightSpacer,
                               PickedChip(
-                                label: currentTask.category?.name ?? $.general,
+                                label: currentTask.category?.id.toCategoryName(context) ?? $.general,
                                 onTap: () {},
                               ),
                             ],

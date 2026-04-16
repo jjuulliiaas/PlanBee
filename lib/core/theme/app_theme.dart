@@ -131,7 +131,7 @@ class AppTheme {
       scrolledUnderElevation: 0,
       centerTitle: true,
         toolbarHeight: 80.h,
-        leadingWidth: 85.w,
+        leadingWidth: 120.w,
       iconTheme: IconThemeData(color: _primaryText),
       titleTextStyle: textTheme.headlineSmall,
       systemOverlayStyle: SystemUiOverlayStyle.dark,

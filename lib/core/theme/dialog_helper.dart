@@ -1,21 +1,24 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../generated/l10n.dart';
+
 class DialogsHelper {
   /// Approve of all data deleting
   static Future<void> showClearDataDialog({
     required BuildContext context,
     required VoidCallback onConfirm,
   }) async {
+    final $ = S.of(context);
     return showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: const Text('Clear All Data?'),
-        content: const Text(
-          'This action is permanent. All your honey tasks will be deleted.',
+        title: Text($.clearAllDataTitle),
+        content: Text(
+          $.clearAllDataDescription,
         ),
         actions: [
           CupertinoDialogAction(
-            child: const Text('Cancel'),
+            child: Text($.cancel),
             onPressed: () => Navigator.pop(context),
           ),
           CupertinoDialogAction(
@@ -24,7 +27,7 @@ class DialogsHelper {
               onConfirm();
               Navigator.pop(context);
             },
-            child: const Text('Clear'),
+            child: Text($.clear),
           ),
         ],
       ),

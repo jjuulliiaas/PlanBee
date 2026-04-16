@@ -47,6 +47,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "chooseCategory": MessageLookupByLibrary.simpleMessage("Обрати категорію"),
     "clear": MessageLookupByLibrary.simpleMessage("Очистити"),
     "clearAllData": MessageLookupByLibrary.simpleMessage("Очистити всі дані"),
+    "clearAllDataDescription": MessageLookupByLibrary.simpleMessage(
+      "Ця дія є незворотною. Усі ваші завдання будуть видалені.",
+    ),
+    "clearAllDataTitle": MessageLookupByLibrary.simpleMessage(
+      "Очистити всі дані?",
+    ),
     "completed": MessageLookupByLibrary.simpleMessage("Виконано"),
     "completedTasks": m0,
     "confirm": MessageLookupByLibrary.simpleMessage("Підтвердити"),

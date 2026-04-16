@@ -137,6 +137,8 @@
   "dataManagement": "Керування даними",
   "clearAllData": "Очистити всі дані",
   "clear": "Очистити",
+  "clearAllDataTitle": "Очистити всі дані?",
+  "clearAllDataDescription": "Ця дія є незворотною. Усі ваші завдання будуть видалені.",
 
   "statusPlanned": "Заплановано",
   "statusInProgress": "У процесі",

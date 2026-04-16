@@ -120,7 +120,7 @@ class DetailsCard extends StatelessWidget {
                         Flexible(
                           child: PickedChip(
                             icon: provider.selectedCategory!.icon,
-                            label: provider.selectedCategory!.name,
+                            label: provider.selectedCategory!.id.toCategoryName(context),
                             onTap: () => controller.onSelectCategory(context),
                           ),
                         ),
