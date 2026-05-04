@@ -81,6 +81,10 @@
   "pauseFocus": "Pause Focus",
   "resumeTimer": "Resume Timer",
   "minutesUnit": "mins",
+  "setFocusDuration": "Set Focus Duration",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "setFocus": "Set Focus",
 
 
   "allTasks": "All Tasks",

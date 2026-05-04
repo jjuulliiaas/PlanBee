@@ -24,16 +24,33 @@ class CategoryProvider extends ChangeNotifier{
 
 }
 
-extension CategoryL10n on String {
+extension CategoryL10n on Object? {
+  /// Універсальний метод, що працює з CategoryModel або String ID
   String toCategoryName(BuildContext context) {
     final $ = S.of(context);
-    return switch (this) {
+
+    final String? id = switch (this) {
+      CategoryModel model => model.id,
+      String idString => idString,
+      _ => null,
+    };
+
+    final translatedName = switch (id) {
       '1' => $.health,
       '2' => $.personal,
       '3' => $.home,
       '4' => $.work,
       '5' => $.study,
       '6' => $.finance,
+      '7' => $.noCategory,
+      _ => null,
+    };
+
+    if (translatedName != null) return translatedName;
+
+    return switch (this) {
+      CategoryModel model => model.name,
+      String idString => idString,
       _ => $.noCategory,
     };
   }

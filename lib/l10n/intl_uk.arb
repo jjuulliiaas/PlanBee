@@ -79,6 +79,10 @@
   "pauseFocus": "Зупинити фокус",
   "resumeTimer": "Продовжити фокус",
   "minutesUnit": "хвилин",
+  "setFocusDuration": "Встановити тривалість фокусу",
+    "hours": "Години",
+    "minutes": "Хвилини",
+    "setFocus": "Почати фокусування",
 
   "allTasks": "Усі завдання",
   "list": "Список",

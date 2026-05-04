@@ -98,7 +98,7 @@ class TaskCard extends StatelessWidget {
                     flex: 3,
                     child: InfoColumn(
                       label: $.category,
-                      value: task.category?.id.toCategoryName(context) ?? $.general,
+                      value: task.category?.toCategoryName(context) ?? $.general,
                       colorValue: colorScheme.primary,
                     ),
                   ),

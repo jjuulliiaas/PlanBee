@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../generated/l10n.dart';
 import '../../../widgets/app_confirm_button.dart';
 import '../../../widgets/base_picker_layout.dart';
 import '../../../widgets/time_picker_wheel.dart';
@@ -36,9 +37,10 @@ class _FocusDurationPickerState extends State<FocusDurationPicker> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final $ = S.of(context);
 
     return BasePickerLayout(
-      title: 'Set Focus Duration',
+      title: $.setFocusDuration,
       children: [
         // _buildPresets(),
         // SizedBox(height: 24.h),
@@ -47,12 +49,12 @@ class _FocusDurationPickerState extends State<FocusDurationPicker> {
           children: [
             SizedBox(
               width: 75.w,
-              child: Center(child: Text('Hours', style: textTheme.bodySmall?.copyWith(color: Colors.grey))),
+              child: Center(child: Text($.hours, style: textTheme.bodySmall?.copyWith(color: Colors.grey))),
             ),
             SizedBox(width: 40.w),
             SizedBox(
               width: 75.w,
-              child: Center(child: Text('Minutes', style: textTheme.bodySmall?.copyWith(color: Colors.grey))),
+              child: Center(child: Text($.minutes, style: textTheme.bodySmall?.copyWith(color: Colors.grey))),
             ),
           ],
         ),
@@ -68,7 +70,7 @@ class _FocusDurationPickerState extends State<FocusDurationPicker> {
         SizedBox(height: 24.h),
 
         AppConfirmButton(
-          text: 'Set Focus',
+          text: $.setFocus,
           onTap: () {
             Navigator.maybePop(context, _selectedDuration);
           },

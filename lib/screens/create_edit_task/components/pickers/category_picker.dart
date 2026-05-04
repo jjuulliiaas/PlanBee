@@ -53,7 +53,7 @@ class CategoryPicker extends StatelessWidget {
                   ),
                   child: DetailName(
                     icon: item.icon,
-                    text: item.id.toCategoryName(context),
+                    text: item.toCategoryName(context),
                     alignment: MainAxisAlignment.start,
                     forceWhite: isSelected,
                   ),
