@@ -107,7 +107,7 @@ class TaskDetailsBody extends StatelessWidget {
                               PropertyName(title: $.category),
                               heightSpacer,
                               PickedChip(
-                                label: currentTask.category?.id.toCategoryName(context) ?? $.general,
+                                label: currentTask.category.toCategoryName(context),
                                 onTap: () {},
                               ),
                             ],

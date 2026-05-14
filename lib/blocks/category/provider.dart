@@ -25,8 +25,7 @@ class CategoryProvider extends ChangeNotifier{
 }
 
 extension CategoryL10n on Object? {
-  /// Універсальний метод, що працює з CategoryModel або String ID
-  String toCategoryName(BuildContext context) {
+  String toCategoryName(BuildContext context, {String? fallback}) {
     final $ = S.of(context);
 
     final String? id = switch (this) {
@@ -48,10 +47,6 @@ extension CategoryL10n on Object? {
 
     if (translatedName != null) return translatedName;
 
-    return switch (this) {
-      CategoryModel model => model.name,
-      String idString => idString,
-      _ => $.noCategory,
-    };
+    return fallback ?? (this is CategoryModel ? (this as CategoryModel).name : id) ?? $.noCategory;
   }
 }

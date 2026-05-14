@@ -25,6 +25,7 @@ class CategoryProgressSection extends StatelessWidget {
         ),
         ...progressList.map((data) => _CategoryProgressCard(
           categoryId: data['id'],
+          categoryName: data['name'],
           icon: data['icon'],
           progress: data['progress'],
         )),
@@ -35,11 +36,13 @@ class CategoryProgressSection extends StatelessWidget {
 
 class _CategoryProgressCard extends StatelessWidget {
   final String categoryId;
+  final String categoryName;
   final IconData icon;
   final double progress;
 
   const _CategoryProgressCard({
     required this.categoryId,
+    required this.categoryName,
     required this.icon,
     required this.progress,
   });
@@ -49,7 +52,7 @@ class _CategoryProgressCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final localizedName = categoryId.toCategoryName(context);
+    final localizedName = categoryId.toCategoryName(context, fallback: categoryName);
 
     return Card(
       margin: EdgeInsets.only(bottom: 12.h),

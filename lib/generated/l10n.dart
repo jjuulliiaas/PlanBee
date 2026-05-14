@@ -429,6 +429,31 @@ class S {
     return Intl.message('mins', name: 'minutesUnit', desc: '', args: []);
   }
 
+  /// `Set Focus Duration`
+  String get setFocusDuration {
+    return Intl.message(
+      'Set Focus Duration',
+      name: 'setFocusDuration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hours`
+  String get hours {
+    return Intl.message('Hours', name: 'hours', desc: '', args: []);
+  }
+
+  /// `Minutes`
+  String get minutes {
+    return Intl.message('Minutes', name: 'minutes', desc: '', args: []);
+  }
+
+  /// `Set Focus`
+  String get setFocus {
+    return Intl.message('Set Focus', name: 'setFocus', desc: '', args: []);
+  }
+
   /// `All Tasks`
   String get allTasks {
     return Intl.message('All Tasks', name: 'allTasks', desc: '', args: []);
